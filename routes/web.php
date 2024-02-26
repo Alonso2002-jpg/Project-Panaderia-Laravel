@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Mail\MailableController;
+use \App\Mail\BillMailable;
+use \App\Mail\ForgotPassMailable;
+use \App\Mail\RegisterMailable;
+use \Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::group(['prefix' => 'email'],function () {
+    Route::get('/register/{email}', [MailableController::class, 'sendRegister'])->name('email.register');
+    Route::get('/invoice/{email}', [MailableController::class, 'sendInVoice'])->name('email.invoice');
+    Route::get('/forgot/{email}',  [MailableController::class, 'sendForgotPass'])->name('email.forgot');
 });

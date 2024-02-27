@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Provider extends Model
 {
     use HasFactory;
+    public static string $IMAGE_DEFAULT = 'https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg';
     protected $table = 'providers';
 
     protected $fillable = [
         'name',
         'nif',
         'telephone',
+        'image',
         'isDeleted'
     ];
 

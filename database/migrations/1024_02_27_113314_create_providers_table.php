@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 120)->unique();
             $table->string('nif', 9)->unique();
             $table->string('telephone', 9);
+            $table->string('image')->default('https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg');
             $table->boolean('isDeleted')->default(false);
             $table->timestamps();
         });

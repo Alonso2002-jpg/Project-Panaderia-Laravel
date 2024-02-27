@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Provider;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProvidersController extends Controller
 {
@@ -78,12 +80,46 @@ class ProvidersController extends Controller
     }
 
 
+    public function editImage($id)
+    {
+        $provider = Provider::find($id);
+        return view('providers.image')->with('provider', $provider);
+    }
+
+    public function updateImage(Request $request, $id){
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        try{
+            $provider = Provider::find($id);
+            if($provider->image != Provider::$IMAGE_DEFAULT && Storage::exists('public/' . $provider->image)){
+                Storage::delete('public/' . $provider->image);
+            }
+
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $fileToSave = Str::uuid() . '.' . $extension;
+            $provider->image = $image->storeAs('providers', $fileToSave, 'public');
+            $provider->save();
+            flash('Provider ' . $provider->name . ' updated successfully.')->warning()->important();
+            return redirect()->route('providers.index');
+        } catch (Exception $e){
+            flash('Error updating the provider'  . $e->getMessage())->error()->important();
+            return redirect()->back();
+        }
+    }
+
+
+
     public function destroy($id)
     {
         if ($id != 1) {
             try {
                 $provider = Provider::find($id);
                 Provider::changeProductsProviderToNotProvider($id);
+                if ($provider->image != Provider::$IMAGE_DEFAULT && Storage::exists('public/' . $provider->image)) {
+                    Storage::delete('public/' . $provider->image);
+                }
                 $provider->delete();
                 flash('Provider ' . $provider->name . ' deleted successfully.')->error()->important();
                 return redirect()->route('providers.index');

@@ -1,32 +1,19 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-warning">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Inicio</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('images/general/nav-logo.svg') }}" alt="..." /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
         </button>
-        <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="Productos.html" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <!-- Cambiado aquí -->
-                        Productos
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="Productos.html">Bolleria</a></li>
-                        <li><a class="dropdown-item" href="Productos.html">Pan</a></li>
-                        <li><a class="dropdown-item" href="Productos.html">Pasteleria</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="tabla.html">Pedidos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Link</a>
-                </li>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('products.index')}}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('categories.index')}}">Categories</a></li>
+                <li class="nav-item"><a class="nav-link" href="">About Us</a></li>
+                <li class="nav-item"><a class="nav-link nav-link-login" href="#contact">Login</a></li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="text" placeholder="Pan duro...">
-                <button class="btn btn-secondary" type="button">Buscar</button>
-            </form>
         </div>
     </div>
 </nav>
+

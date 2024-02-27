@@ -27,4 +27,8 @@ class Provider extends Model
         return $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"])
             ->orWhereRaw('LOWER(nif) LIKE ?', ["%" . strtolower($search) . "%"]);
     }
+
+    public static function changeProductsProviderToNotProvider($id){
+        Product::where('provider_id', '=', $id)->update(['provider_id' => 1]);
+    }
 }

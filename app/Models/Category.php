@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+    public static string $IMAGE_DEFAULT = 'https://thefoodtech.com/wp-content/uploads/2023/10/PANADERIA-PRINCIPAL-1.jpg';
 
     protected $table = 'categories';
 
     protected $fillable = [
         'name',
+        'image',
         'isDeleted',
     ];
 

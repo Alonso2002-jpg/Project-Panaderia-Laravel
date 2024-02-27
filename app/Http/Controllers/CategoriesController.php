@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CategoriesController extends Controller{
 
     public function index(Request $request){
-        $categories = Category::search($request->search)->orderBy('id', 'asc')->paginate(5);
+        $categories = Category::search($request->search)->orderBy('id', 'asc')->paginate(3);
         return view('categories.index')->with('categories', $categories);
     }
 
@@ -51,17 +53,55 @@ class CategoriesController extends Controller{
 
     public function update(Request $request, $id){
         $request->validate([
-            'name' => 'min:4|max:120|required|unique:categories,name,' .$id,
+            'name' => 'min:4|max:120|required|unique:categories,name,' . $id,
         ]);
 
-        try{
+        try {
             $category = Category::find($id);
             $category->name = strtoupper($request->name);
             $category->save();
             flash('Category ' . $category->name . ' successfully updated')->warning()->important();
             return redirect()->route('categories.index');
-        }catch (Exception $e){
+        } catch (Exception $e) {
             flash('There is already another category with the same name')->error()->important();
+            return redirect()->back();
+        }
+    }
+
+    public function editImage($id){
+        try {
+            $category = Category::find($id);
+            if($category){
+                return view('categories.image')->with('category', $category);
+            } else {
+                flash('Invalid route')->error()->important();
+                return redirect()->route('categories.index');
+            }
+        } catch (Exception $e){
+            flash('Invalid route')->error()->important();
+            return redirect()->route('categories.index');
+        }
+    }
+
+    public function updateImage(Request $request, $id){
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        try{
+            $category = Category::find($id);
+            if($category->image != Category::$IMAGE_DEFAULT && Storage::exists('public/' . $category->image)){
+                Storage::delete('public/' . $category->image);
+            }
+
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $fileToSave = Str::uuid() . '.' . $extension;
+            $category->image = $image->storeAs('category', $fileToSave, 'public');
+            $category->save();
+            flash('Category ' . $category->name . ' successfully updated')->warning()->important();
+            return redirect()->route('categories.index');
+        } catch (Exception $e){
+            flash('Error updating Category ' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }

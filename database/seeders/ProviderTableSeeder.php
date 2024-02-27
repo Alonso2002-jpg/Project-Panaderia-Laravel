@@ -15,20 +15,25 @@ class ProviderTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('providers')->insert([
+            [
+                'name' => 'SIN PROVEEDOR',
+                'nif' => '00000000A',
+                'telephone' => '000000000',
+            ],
           [
               'name' => 'Sweet Distributions',
               'nif' => '12345678A',
-              'telephone' => '123-45-6789',
+              'telephone' => '123456789',
           ],
             [
                 'name' => 'Flour and More',
                 'nif' => '98765432B',
-                'telephone' => '987-65-4321',
+                'telephone' => '987654321',
             ],
             [
                 'name' => 'Drink Suppliers',
                 'nif' => '87654321C',
-                'telephone' => '123-98-7456',
+                'telephone' => '123987456',
             ],
         ]);
     }

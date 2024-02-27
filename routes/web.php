@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
 use Illuminate\Support\Facades\Route;
 use \App\Mail\MailableController;
+use \App\Models\Category;
 use \App\Mail\BillMailable;
 use \App\Mail\ForgotPassMailable;
 use \App\Mail\RegisterMailable;
@@ -21,8 +22,9 @@ use \Illuminate\Support\Facades\Mail;
 */
 
 Route::get('/', function () {
-    return redirect()->route('products.index');
-});
+    $categories = Category::all();
+    return view('index')->with('categories', $categories);
+})->name('home');
 
 Route::group(['prefix' => 'products'], function () {
     Route::get('/', [ProductsController::class, 'index'])->name('products.index');

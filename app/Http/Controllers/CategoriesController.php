@@ -19,7 +19,7 @@ class CategoriesController extends Controller{
 
     public function store(Request $request){
         $request->validate([
-            'name' => 'min:3|max:120|required|unique:categories,name',
+            'name' => 'min:4|max:120|required|unique:categories,name',
         ]);
         try {
             $category = new Category();

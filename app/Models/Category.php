@@ -34,7 +34,7 @@ class Category extends Model
 
         if ($products->count() > 0) {
             foreach ($products as $product) {
-                $product->category_id = 4;
+                $product->category_id = 1;
                 $product->save();
             }
         }

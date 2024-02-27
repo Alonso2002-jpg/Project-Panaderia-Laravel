@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Provider;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,7 @@ class ProviderTableSeeder extends Seeder
 
     public function run(): void
     {
+        Provider::truncate();
         DB::table('providers')->insert([
             [
                 'name' => 'SIN PROVEEDOR',

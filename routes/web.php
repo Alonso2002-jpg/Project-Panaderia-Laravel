@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
 use Illuminate\Support\Facades\Route;
 use \App\Mail\MailableController;
+use \App\Models\Category;
 use \App\Mail\BillMailable;
 use \App\Mail\ForgotPassMailable;
 use \App\Mail\RegisterMailable;
@@ -21,8 +22,9 @@ use \Illuminate\Support\Facades\Mail;
 */
 
 Route::get('/', function () {
-    return redirect()->route('products.index');
-});
+    $categories = Category::all();
+    return view('index')->with('categories', $categories);
+})->name('home');
 
 Route::group(['prefix' => 'products'], function () {
     Route::get('/', [ProductsController::class, 'index'])->name('products.index');
@@ -43,6 +45,8 @@ Route::group(['prefix' => 'categories'], function () {
     Route::get('/{category}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');//->middleware(['auth','admin']);
     Route::put('/{category}', [CategoriesController::class, 'update'])->name('categories.update');//->middleware(['auth','admin']);
     Route::delete('/{category}', [CategoriesController::class, 'destroy'])->name('categories.destroy');//->middleware(['auth','admin']);
+    Route::get('/{category}/edit-image', [CategoriesController::class, 'editImage'])->name('categories.editImage');//->middleware(['auth','admin']);
+    Route::patch('/{category}/edit-image', [CategoriesController::class, 'updateImage'])->name('categories.updateImage');//->middleware(['auth','admin']);
 });
 
 Route::group(['prefix' => 'providers'], function () {

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,7 @@ class AddressTableSeeder extends Seeder
      */
     public function run(): void
     {
+        Address::truncate();
        DB::table('addresses')->insert([
            [
                'street' => 'Calle Polvoranca',

@@ -13,7 +13,7 @@ class AddressTableSeeder extends Seeder
      */
     public function run(): void
     {
-       DB::table('address')->insert([
+       DB::table('addresses')->insert([
            [
                'street' => 'Calle Polvoranca',
                'number' => '19, 1B',

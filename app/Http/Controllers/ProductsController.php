@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class ProductsController extends Controller
 {
     public function index(Request $request){
-        $products = Product::filtrar($request->search, $request->category, $request->provider)->orderBy('id' ?? $request->orderBy, 'asc' ?? $request->order)->paginate($request->paginate ?? 5);
+        $products = Product::filtrar($request->search, $request->category, $request->provider)->orderBy($request->orderBy ?? 'id' , $request->order ?? 'asc')->paginate($request->paginate ?? 5);
         return view('products.index')->with('products', $products);
     }
 

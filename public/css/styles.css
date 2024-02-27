@@ -1,9 +1,9 @@
 header{background-color: bisque;
 display: flex;
 justify-content: space-between;
-align-items: center;}  
+align-items: center;}
 header p {
-    margin: 0; 
+    margin: 0;
     text-transform: uppercase;
 }
 #enlace{
@@ -21,13 +21,13 @@ header p {
     width: 200px;
   }
 #cabecera{
-    background-image: url(/imagenes/pizarra.jpg);
+    background-image: url(../images/pizarra.jpg);
 }
 #medio{
     text-align: center;
 }
 body{
-    background-image: url(/imagenes/fonndo.jpg);
+    background-image: url(../images/fonndo.jpg);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
@@ -45,7 +45,7 @@ footer{
     height: 600px;
     overflow: hidden;
     line-height: 30px;
-  
+
     .marquee {
       top: 0;
       left: 100%;
@@ -54,7 +54,7 @@ footer{
       position: absolute;
       animation: marquee 30s linear infinite;
     }
-  
+
     .marquee2 {
       animation-delay: 15s;
     }
@@ -62,7 +62,7 @@ footer{
       padding-left: 10px;
     }
   }
-  
+
   @keyframes marquee {
     0% {
       left: 100%;

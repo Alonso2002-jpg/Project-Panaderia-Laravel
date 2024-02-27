@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Provider;
 use Exception;
@@ -17,7 +18,8 @@ class ProductsController extends Controller
 
     public function show($id){
        $product = Product::find($id);
-       return view('products.show')->with('product', $product);
+       $relatedProducts = Product::where('category_id', '=', $product->category_id)->get();
+       return view('products.show')->with('product', $product)->with('relatedProducts', $relatedProducts);
     }
 
     public function create(){

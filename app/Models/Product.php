@@ -44,5 +44,6 @@ class Product extends Model
                 $query->where('provider_id', '=', $provider);
             });
     }
+
 }
 

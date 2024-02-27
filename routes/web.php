@@ -18,7 +18,7 @@ use \Illuminate\Support\Facades\Mail;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::group(['prefix' => 'email'],function () {

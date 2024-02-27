@@ -1,0 +1,73 @@
+header{background-color: bisque;
+display: flex;
+justify-content: space-between;
+align-items: center;}  
+header p {
+    margin: 0; 
+    text-transform: uppercase;
+}
+#enlace{
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 90px;
+  height: 45px;
+  background: greenyellow;
+  transition-property: width;
+  transition-duration: 1s;
+  transition-timing-function: ease-out;
+  text-align: center;
+}
+#enlace:hover {
+    width: 200px;
+  }
+#cabecera{
+    background-image: url(/imagenes/pizarra.jpg);
+}
+#medio{
+    text-align: center;
+}
+body{
+    background-image: url(/imagenes/fonndo.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+section{background-color: rgba(255, 228, 196, 0.784);}
+footer{
+    background-color: rgb(252, 193, 83);
+    text-align: center;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 22px;
+}
+
+.marquee-container {
+    height: 600px;
+    overflow: hidden;
+    line-height: 30px;
+  
+    .marquee {
+      top: 0;
+      left: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: absolute;
+      animation: marquee 30s linear infinite;
+    }
+  
+    .marquee2 {
+      animation-delay: 15s;
+    }
+    b {
+      padding-left: 10px;
+    }
+  }
+  
+  @keyframes marquee {
+    0% {
+      left: 100%;
+    }
+    100% {
+      left: -100%
+    }
+  }

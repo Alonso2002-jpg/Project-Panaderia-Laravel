@@ -22,7 +22,7 @@ class ProductsController extends Controller
 
     public function create(){
         $categories = Category::where('id', '<>', 1)->get();
-        $providers = Provider::all();
+        $providers = Provider::where('id', '<>', 1)->get();
         return view('products.create')->with('categories', $categories)->with('providers', $providers);
     }
 
@@ -34,13 +34,13 @@ class ProductsController extends Controller
             'price' => 'required|regex:/^\d{1,6}(\.\d{1,2})?$/',
             'stock' => 'required|integer|max:10000',
             'category' => 'sometimes|exists:category,id',
-            'provider' => 'required|exists:provider,id'
+            'provider' => 'sometimes|exists:provider,id'
         ]);
 
         try{
             $product = new Product($request->all());
             $product->category_id = $request->category ?? 1;
-            $product->provider_id = $request->provider;
+            $product->provider_id = $request->provider ?? 1;
             $product->save();
             flash('Product ' . $product->name . ' created successfully.')->success()->important();
             return redirect()->route('products.index');
@@ -54,7 +54,7 @@ class ProductsController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::where('id', '<>', 1)->get();
-        $providers = Provider::all();
+        $providers = Provider::where('id', '<>', 1)->get();
         return view('products.edit')
             ->with('product', $product)
             ->with('category', $categories)
@@ -69,14 +69,14 @@ class ProductsController extends Controller
             'price' => 'required|regex:/^\d{1,6}(\.\d{1,2})?$/',
             'stock' => 'required|integer|max:10000',
             'category' => 'sometimes|exists:category,id',
-            'provider' => 'required|exists:provider,id',
+            'provider' => 'sometimes|exists:provider,id',
         ]);
         try {
             $product = Product::find($id);
             $product->update($request->all());
             $product->description = $product->description ?? " ";
             $product->category_id = $request->category ?? 1;
-            $product->provider_id = $request->provider;
+            $product->provider_id = $request->provider ?? 1;
             $product->save();
             flash('Product ' . $product->name . ' updated successfully.')->warning()->important();
             return redirect()->route('products.index');

@@ -12,14 +12,19 @@ class Provider extends Model
 
     protected $fillable = [
         'name',
-        'NIF',
+        'nif',
         'telephone',
-        'correo',
         'isDeleted'
     ];
 
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function scopeFiltrarProvider($query, $search)
+    {
+        return $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"])
+            ->orWhereRaw('LOWER(nif) LIKE ?', ["%" . strtolower($search) . "%"]);
     }
 }

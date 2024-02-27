@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->string('name', 120)->unique();
-            $table->string('NIF', 9)->unique();
+            $table->string('nif', 9)->unique();
             $table->string('telephone', 9);
-            $table->string('correo', 120);
             $table->boolean('isDeleted')->default(false);
             $table->timestamps();
         });

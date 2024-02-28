@@ -11,18 +11,21 @@ use Illuminate\Support\Facades\Auth;
 class OrdersController extends Controller
 {
     public function getOrders(){
-        $orders = Order::all();
+        $orders = Order::where('open', false);
         return view('orders.index')->with('orders', $orders);
     }
 
     public function getMeOrders(){
         $id = auth()->id();
-        $orders = Order::where('user_id', $id)->get();
+        $orders = Order::where('user_id', $id)
+            ->where('open', false)
+            ->get();
         return view('orders.index')->with('orders', $orders);
     }
 
     public function getOrderById($id){
         $order = Order::where('id', $id)
+            ->where('open', false)
             ->first();
         return view('orders.show')->with('order', $order);
     }
@@ -30,6 +33,7 @@ class OrdersController extends Controller
     public function getMeOrderById($id){
         $order = Order::where('id', $id)
             ->where('user_id', Auth::user()->id)
+            ->where('open', false)
             ->first();
         return view('orders.show')->with('order', $order);
     }
@@ -37,6 +41,7 @@ class OrdersController extends Controller
     public function returnOrderById($id){
         try {
             $order = Order::where('id', $id)
+                ->where('open', false)
                 ->first();
             foreach($order->orderLine as $orderline){
                 $product = Product::find($orderline->product_id);
@@ -55,6 +60,7 @@ class OrdersController extends Controller
         try{
             $order = Order::where('id', $id)
                 ->where('user_id', Auth::user()->id)
+                ->where('open', false)
                 ->first();
             foreach($order->orderLine as $orderline){
                 $product = Product::find($orderline->product_id);
@@ -73,7 +79,9 @@ class OrdersController extends Controller
     public function destroyOrderById($id)
     {
         try {
-            $order = Order::find($id);
+            $order = Order::where('id', $id)
+                ->where('open',false)
+                ->first();
             $order->delete();
             flash('Order ' . $order->id . ' deleted successfully.')->error()->important();
             return redirect()->route('orders.index');
@@ -86,9 +94,10 @@ class OrdersController extends Controller
     public function destroyMeOrderById($id)
     {
         try {
-            $order = Order::find($id)
-            ->where('user_id', Auth::user()->id)
-            ->first();
+            $order = Order::where('id', $id)
+                ->where('user_id', Auth::user()->id)
+                ->where('open', false)
+                ->first();
             $order->delete();
             flash('Order ' . $order->id . ' deleted successfully.')->error()->important();
             return redirect()->route('orders.index');

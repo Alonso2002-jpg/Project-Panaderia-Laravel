@@ -26,12 +26,12 @@ class HomeController extends Controller
     }
 
     public function getMeAddresses(){
-        $addresses = Address::where('user_id', Auth::user()->id);
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
         return view('addresses.index')->with('addresses', $addresses);
     }
 
     public function getAddressById($id){
-        $address = Address::where('id', $id);
+        $address = Address::where('id', $id)->get();
         return view('address.show')->with('address', $address);
     }
 

@@ -11,15 +11,20 @@ class Address extends Model
     protected $table = 'addresses';
 
     protected $fillable = [
+        'user_id',
+        'name',
+        'lastName',
+        'dni',
         'street',
         'number',
         'city',
         'province',
         'country',
-        'postCode'
+        'postCode',
+        'additionalInfo'
     ];
 
-   public function client(){
-       return $this->belongsTo(Client::class);
+   public function user(){
+       return $this->belongsTo(User::class);
    }
 }

@@ -13,8 +13,8 @@ class OrderLine extends Model
         'order_id',
         'product_id',
         'stock',
-        'price',
-        'totalPrice'
+        'unitPrice',
+        'linePrice'
     ];
 
     protected function order(){
@@ -22,6 +22,6 @@ class OrderLine extends Model
     }
 
     protected function products() {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(Product::class);
     }
 }

@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_lines', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('order_id')->references('id')->on('orders');
-            $table->foreignUuid('product_id')->references('id')->on('products');
+            $table->id();
+            $table->foreignId('order_id')->references('id')->on('orders');
+            $table->foreignId('product_id')->references('id')->on('products');
             $table->integer('stock');
-            $table->decimal('price', 8, 2);
-            $table->decimal('totalPrice', 8,2);
+            $table->decimal('unitPrice', 10, 2);
+            $table->decimal('totalPrice', 10,2);
             $table->timestamps();
         });
     }

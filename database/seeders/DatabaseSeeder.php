@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
+    {   $this->call(UserTableSeeder::class);
         $this->call(CategoryTableSeeder::class);
         $this->call(ProviderTableSeeder::class);
         $this->call(ProductTableSeeder::class);

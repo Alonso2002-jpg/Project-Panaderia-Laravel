@@ -21,7 +21,7 @@ class OrderLine extends Model
         return $this->belongsTo(Order::class);
     }
 
-    protected function products() {
+    protected function product() {
         return $this->belongsTo(Product::class);
     }
 }

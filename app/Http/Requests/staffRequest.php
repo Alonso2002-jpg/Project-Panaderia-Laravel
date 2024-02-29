@@ -2,20 +2,23 @@
 
 namespace App\Http\Requests;
 
-class staffRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class staffRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'uuid' => ['required'],
             'name' => ['required'],
             'dni' => ['required'],
             'lastname' => ['required'],
-            'startDate' => ['required', 'date'],
+            'email' => ['required'],
             'endDate' => ['required', 'date'],
             'updateDate' => ['required', 'date'],
             'creationDate' => ['required', 'date'],
             'image' => ['required'],
+            'role' => ['required'],
+            'isDelete' => ['required'],
         ];
     }
 

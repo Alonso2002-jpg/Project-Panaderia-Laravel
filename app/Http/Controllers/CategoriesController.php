@@ -15,6 +15,12 @@ class CategoriesController extends Controller{
         return view('categories.index')->with('categories', $categories);
     }
 
+    public function show($id)
+    {
+        $category = Category::find($id);
+        return view('categories.show')->with('category', $category);
+    }
+
     public function create(){
         return view('categories.create');
     }

@@ -2,28 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class staff
+class staff extends Model
 {
-    use HasFactory;
+    public static string $IMAGE_DEFAULT = 'https://via.placeholder.com/150';
+    protected $table = 'staff';
 
     protected $fillable = [
-        'uuid',
+        'id',
         'name',
         'dni',
+        'email',
         'lastname',
         'startDate',
         'endDate',
-        'updateDate',
-        'creationDate',
         'image',
+        'isDelete',
     ];
 
     protected $casts = [
         'startDate' => 'date',
         'endDate' => 'date',
-        'updateDate' => 'date',
-        'creationDate' => 'date',
     ];
+
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"])
+            ->orWhereRaw('LOWER(dni) LIKE ?', ["%" . strtolower($search) . "%"])
+            ->orWhereRaw('LOWER(lastname) LIKE ?', ["%" . strtolower($search) . "%"]);
+    }
+
 }

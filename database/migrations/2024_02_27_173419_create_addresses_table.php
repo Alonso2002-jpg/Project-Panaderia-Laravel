@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('lastName', 75);
             $table->string('dni', 9);
             $table->string('street', 100);
-            $table->string('number', 7);
+            $table->string('number', 7)->nullable();
             $table->string('city', 50);
             $table->string('province', 70);
             $table->string('country', 50);
             $table->string('postCode',5);
-            $table->string('additionalInfo', 255);
+            $table->string('additionalInfo', 150)->default(" ");
             $table->timestamps();
         });
     }

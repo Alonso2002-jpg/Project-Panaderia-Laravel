@@ -52,4 +52,8 @@ class User extends Authenticatable
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
+    public function getCart(){
+        return $this->orders()->where('open', true)->firstOrCreate(['open' => true]);
+    }
 }

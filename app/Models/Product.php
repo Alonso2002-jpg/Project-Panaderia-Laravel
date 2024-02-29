@@ -32,17 +32,9 @@ class Product extends Model
         return $this->belongsTo(Provider::class);
     }
 
-    public function scopeFiltrar($query, $search, $category, $provider)
+    public function scopeFiltrar($query, $search)
     {
-        return $query->when($search, function ($query) use ($search) {
-            $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"]);
-        })
-            ->when($category, function ($query) use ($category) {
-                $query->where('category_id', '=', $category);
-            })
-            ->when($provider, function ($query) use ($provider){
-                $query->where('provider_id', '=', $provider);
-            });
+        return $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"]);
     }
 
 }

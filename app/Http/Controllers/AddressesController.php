@@ -15,18 +15,18 @@ class AddressesController extends Controller
     }
 
     public function getMeAddresses(){
-        $addresses = Address::where('user_id', Auth::user()->id)->get();
+        $addresses = Address::where('user_id', Auth::id())->get();
         return view('addresses.index')->with('addresses', $addresses);
     }
 
     public function getAddressById($id){
-        $address = Address::where('id', $id)->get();
+        $address = Address::where('id', $id)->first();
         return view('address.show')->with('address', $address);
     }
 
     public function getMeAddressById($id){
         $address = Address::where('id', $id)
-            ->where('user_id', Auth::user()->id)
+            ->where('user_id', Auth::id())
             ->first();
         return view('address.show')->with('address', $address);
     }
@@ -51,7 +51,7 @@ class AddressesController extends Controller
 
         try  {
             $address = new Address($request->all());
-            $address->user_id = Auth::user()->id;
+            $address->user_id = Auth::id();
             $address->save();
             flash('New address created successfully.')->success()->important();
             return redirect()->route('addresses.index');
@@ -63,12 +63,12 @@ class AddressesController extends Controller
 
 
     public function editMeAddress($id){
-        $address = Address::where('id', $id)->where('user_id', Auth::user()->id)->get();
+        $address = Address::where('id', $id)->where('user_id', Auth::id())->first();
         return view('addresses.edit')->with('address', $address);
     }
 
     public function editAddress($id){
-        $address = Address::where('id', $id)->get();
+        $address = Address::where('id', $id)->first();
         return view('addresses.edit')->with('address', $address);
     }
 
@@ -87,9 +87,8 @@ class AddressesController extends Controller
         ]);
 
         try{
-            $address = Address::where('id', $id)->where('user_id', Auth::user()->id)->first();
+            $address = Address::where('id', $id)->where('user_id', Auth::id())->first();
             $address->update($request->all());
-            $address->save();
             flash('Address updated successfully.')->warning()->important();
             return redirect()->route('addresses.index');
         }   catch (Exception $e) {
@@ -113,7 +112,7 @@ class AddressesController extends Controller
     public function destroyMeAddress($id){
         try{
             $address = Address::where('id', $id)
-                ->where('user_id', Auth::user()->id)
+                ->where('user_id', Auth::id())
                 ->first();
             $address->delete();
             flash('Address ' . $address->id . ' deleted successfully.')->error()->important();

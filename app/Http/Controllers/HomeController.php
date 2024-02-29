@@ -19,30 +19,6 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-
-    public function getAddresses(){
-        $addresses = Address::all();
-        return view('addresses.index')->with('addresses', $addresses);
-    }
-
-    public function getMeAddresses(){
-        $addresses = Address::where('user_id', Auth::user()->id);
-        return view('addresses.index')->with('addresses', $addresses);
-    }
-
-    public function getAddressById($id){
-        $address = Address::where('id', $id);
-        return view('address.show')->with('address', $address);
-    }
-
-    public function getMeAddressById($id){
-        $address = Address::where('id', $id)
-            ->where('user_id', Auth::user()->id)
-            ->first();
-        return view('address.show')->with('address', $address);
-    }
-
-
     /**
      * Show the application dashboard.
      *

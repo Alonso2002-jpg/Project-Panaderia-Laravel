@@ -8,11 +8,12 @@ use App\Models\Provider;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
     public function index(Request $request){
-        $products = Product::filtrar($request->search, $request->category, $request->provider)->orderBy($request->orderBy ?? 'id' , $request->order ?? 'asc')->paginate($request->paginate ?? 5);
+        $products = Product::filtrar($request->search)->orderBy($request->orderBy ?? 'id' , $request->order ?? 'asc')->paginate($request->paginate ?? 5);
         return view('products.index')->with('products', $products);
     }
 
@@ -28,6 +29,11 @@ class ProductsController extends Controller
         return view('products.create')->with('categories', $categories)->with('providers', $providers);
     }
 
+    public function getProductsByCategory($id){
+        $products = Product::where('category_id', "=", $id)->orderBy('id', 'asc')->paginate(5);
+        return view('products.index')->with('products', $products);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -41,6 +47,7 @@ class ProductsController extends Controller
 
         try{
             $product = new Product($request->all());
+            $product->id = Str::uuid();
             $product->category_id = $request->category ?? 1;
             $product->provider_id = $request->provider ?? 1;
             $product->save();

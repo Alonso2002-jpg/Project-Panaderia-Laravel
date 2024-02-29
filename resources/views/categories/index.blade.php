@@ -11,7 +11,7 @@
             <div class="marquee d-flex justify-content-around">
                 <div class="row">
                         <div class="col-md-3">
-                            <p id="SmallAnimation">LOREM</p>
+                            <p>LOREM</p>
                         </div>
                 </div>
             </div>

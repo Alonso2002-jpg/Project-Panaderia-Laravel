@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \App\Mail\MailableController;
 use \App\Models\Category;
@@ -58,10 +59,6 @@ Route::group(['prefix' => 'providers'], function () {
     Route::put('/{provider}', [ProvidersController::class, 'update'])->name('providers.update');//->middleware(['auth','admin']);
     Route::delete('/{provider}', [ProvidersController::class, 'destroy'])->name('providers.destroy');//->middleware(['auth','admin'])
 });
-
-//Auth::routes();
-
-//Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::group(['prefix' => 'email'],function () {

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+
     protected $table = 'orders';
     protected $fillable = [
         'user_id',
@@ -18,11 +19,13 @@ class Order extends Model
         'open'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function orderLines(){
+    public function orderLines()
+    {
         return $this->hasMany(OrderLine::class);
     }
 

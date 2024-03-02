@@ -3,13 +3,10 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
+use App\Mail\MailableController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use \App\Mail\MailableController;
-use \App\Models\Category;
-use \App\Mail\BillMailable;
-use \App\Mail\ForgotPassMailable;
-use \App\Mail\RegisterMailable;
-use \Illuminate\Support\Facades\Mail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,16 +55,28 @@ Route::group(['prefix' => 'providers'], function () {
     Route::put('/{provider}', [ProvidersController::class, 'update'])->name('providers.update');//->middleware(['auth','admin']);
     Route::delete('/{provider}', [ProvidersController::class, 'destroy'])->name('providers.destroy');//->middleware(['auth','admin'])
 });
+Route::group(['prefix' => 'staff'], function () {
+    Route::get('/', [StaffController::class, 'index'])->name('staff.index');//->middleware(['auth', 'admin']);
+    Route::get('/create', [StaffController::class, 'create'])->name('staff.create');//->middleware(['auth', 'admin']);
+    Route::post('/', [StaffController::class, 'store'])->name('staff.store');//->middleware(['auth', 'admin']);
+    Route::get('/{staff}', [StaffController::class, 'show'])->name('staff.show');//->middleware(['auth', 'admin']);
+    Route::get('/{staff}/edit', [StaffController::class, 'edit'])->name('staff.edit');//->middleware(['auth', 'admin']);
+    Route::put('/{staff}', [StaffController::class, 'update'])->name('staff.update');//->middleware(['auth', 'admin']);
+    Route::delete('/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy');//->middleware(['auth', 'admin']);
+    Route::get('/{staff}/edit-image', [StaffController::class, 'editImage'])->name('staff.editImage');//->middleware(['auth', 'admin']);
+    Route::patch('/{staff}/update-image', [StaffController::class, 'updateImage'])->name('staff.updateImage');//->middleware(['auth', 'admin']);
+    Route::put('/{staff}/recover', [StaffController::class, 'recover'])->name('staff.recover');//->middleware(['auth', 'admin']);
+});
 
 //Auth::routes();
 
 //Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
-Route::group(['prefix' => 'email'],function () {
+Route::group(['prefix' => 'email'], function () {
     Route::get('/register/{email}', [MailableController::class, 'sendRegister'])->name('email.register');
     Route::get('/invoice/{email}', [MailableController::class, 'sendInVoice'])->name('email.invoice');
-    Route::get('/forgot/{email}',  [MailableController::class, 'sendForgotPass'])->name('email.forgot');
+    Route::get('/forgot/{email}', [MailableController::class, 'sendForgotPass'])->name('email.forgot');
 });
 
 Auth::routes();

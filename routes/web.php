@@ -3,8 +3,7 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
-use App\Mail\MailableController;
-use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,12 +67,8 @@ Route::group(['prefix' => 'staff'], function () {
     Route::put('/{staff}/recover', [StaffController::class, 'recover'])->name('staff.recover');//->middleware(['auth', 'admin']);
 });
 
-//Auth::routes();
 
-//Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
-Route::group(['prefix' => 'email'], function () {
+Route::group(['prefix' => 'email'],function () {
     Route::get('/register/{email}', [MailableController::class, 'sendRegister'])->name('email.register');
     Route::get('/invoice/{email}', [MailableController::class, 'sendInVoice'])->name('email.invoice');
     Route::get('/forgot/{email}', [MailableController::class, 'sendForgotPass'])->name('email.forgot');

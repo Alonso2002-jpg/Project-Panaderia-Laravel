@@ -16,11 +16,14 @@ class CategoryTableSeeder extends Seeder
     {
         Category::truncate();
         DB::table('categories')->insert([
-            ['name' => 'SIN CATEGORY'],
+            ['name' => 'NOT CATEGORY'],
             ['name' => 'CANDIES'],
             ['name' => 'DRINKS'],
             ['name' => 'BREADS'],
-            ['name' => 'CUPCAKES']
+            ['name' => 'CUPCAKES'],
+            ['name' => 'APPETIZERS'],
+            ['name' => 'CAKES'],
+            ['name' => 'COOKIES']
         ]);
     }
 }

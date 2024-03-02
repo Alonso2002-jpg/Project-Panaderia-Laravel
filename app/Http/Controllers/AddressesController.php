@@ -9,33 +9,39 @@ use Illuminate\Support\Facades\Auth;
 
 class AddressesController extends Controller
 {
-    public function getAddresses(){
+    public function getAddresses()
+    {
         $addresses = Address::all();
         return view('addresses.index')->with('addresses', $addresses);
     }
 
-    public function getMeAddresses(){
+    public function getMeAddresses()
+    {
         $addresses = Address::where('user_id', Auth::id())->get();
         return view('addresses.index')->with('addresses', $addresses);
     }
 
-    public function getAddressById($id){
+    public function getAddressById($id)
+    {
         $address = Address::where('id', $id)->first();
         return view('address.show')->with('address', $address);
     }
 
-    public function getMeAddressById($id){
+    public function getMeAddressById($id)
+    {
         $address = Address::where('id', $id)
             ->where('user_id', Auth::id())
             ->first();
         return view('address.show')->with('address', $address);
     }
 
-    public function createAddress(){
+    public function createAddress()
+    {
         return view('addresses.create');
     }
 
-    public function storeMeAddress(Request $request){
+    public function storeMeAddress(Request $request)
+    {
         $request->validate([
             'name' => 'min:3|max:50|required',
             'lastName' => 'min:3|max:75|required',
@@ -49,30 +55,33 @@ class AddressesController extends Controller
             'additionalInfo' => 'sometimes|max:150'
         ]);
 
-        try  {
+        try {
             $address = new Address($request->all());
             $address->user_id = Auth::id();
             $address->save();
             flash('New address created successfully.')->success()->important();
             return redirect()->route('addresses.index');
-        } catch (Exception $e){
-            flash('Error creating the address. '. $e->getMessage())->error()->important();
+        } catch (Exception $e) {
+            flash('Error creating the address. ' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }
 
 
-    public function editMeAddress($id){
+    public function editMeAddress($id)
+    {
         $address = Address::where('id', $id)->where('user_id', Auth::id())->first();
         return view('addresses.edit')->with('address', $address);
     }
 
-    public function editAddress($id){
+    public function editAddress($id)
+    {
         $address = Address::where('id', $id)->first();
         return view('addresses.edit')->with('address', $address);
     }
 
-    public function updateMeAddress(Request $request, $id){
+    public function updateMeAddress(Request $request, $id)
+    {
         $request->validate([
             'name' => 'min:3|max:50|required',
             'lastName' => 'min:3|max:75|required',
@@ -86,19 +95,20 @@ class AddressesController extends Controller
             'additionalInfo' => 'sometimes|max:150'
         ]);
 
-        try{
+        try {
             $address = Address::where('id', $id)->where('user_id', Auth::id())->first();
             $address->update($request->all());
             flash('Address updated successfully.')->warning()->important();
             return redirect()->route('addresses.index');
-        }   catch (Exception $e) {
+        } catch (Exception $e) {
             flash('Error updating the address' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }
 
-    public function destroyAddress($id){
-        try{
+    public function destroyAddress($id)
+    {
+        try {
             $address = Address::find($id);
             $address->delete();
             flash('Address ' . $address->id . ' deleted successfully.')->error()->important();
@@ -109,8 +119,9 @@ class AddressesController extends Controller
         }
     }
 
-    public function destroyMeAddress($id){
-        try{
+    public function destroyMeAddress($id)
+    {
+        try {
             $address = Address::where('id', $id)
                 ->where('user_id', Auth::id())
                 ->first();

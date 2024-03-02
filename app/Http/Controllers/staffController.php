@@ -30,15 +30,15 @@ class staffController extends Controller
         }
         $personal = $personal->paginate(3);
 
-        //    return view('personal.index')->with('personal', $personal);
-        return response()->json(['personal' => $personal]);
+        return view('staff.index')->with('personal', $personal);
+        // return response()->json(['personal' => $personal]);
     }
 
     public function show($id)
     {
         $staff = staff::find($id);
-        //    return view('staff.show')->with('staff', $staff);
-        return response()->json(['staff' => $staff]);
+        return view('staff.show')->with('staff', $staff);
+        // return response()->json(['staff' => $staff]);
 
     }
 
@@ -49,8 +49,8 @@ class staffController extends Controller
 
             if (!$staff) {
                 Session::flash('error', 'Personal no encontrado.');
-                //   return redirect()->back();
-                return response()->json(['message' => 'Personal no encontrado'], 404);
+                return redirect()->back();
+                //return response()->json(['message' => 'Personal no encontrado'], 404);
             }
 
 
@@ -65,21 +65,21 @@ class staffController extends Controller
 
         } catch (\Exception $e) {
             Session::flash('error', 'Error al eliminar el personal: ' . $e->getMessage());
-            // return redirect()->back();
-            return response()->json(['message' => 'Error al eliminar el personal: ' . $e->getMessage()], 400);
+            return redirect()->back();
+            // return response()->json(['message' => 'Error al eliminar el personal: ' . $e->getMessage()], 400);
         }
 
-        // return redirect()->route('staff.index');
-        return response()->json(['staff' => $staff]);
+        return redirect()->route('staff.index');
+        //return response()->json(['staff' => $staff]);
     }
 
     public function update(Request $request, $id)
     {
         $staff = staff::find($id);
         if (!$staff) {
-            // return redirect()->back();
+            return redirect()->back();
 
-            return response()->json(['message' => 'Personal no encontrado'], 404);
+            //return response()->json(['message' => 'Personal no encontrado'], 404);
         }
 
         $validatedData = $request->validate([
@@ -100,13 +100,13 @@ class staffController extends Controller
             }
 
             $staff->update($validatedData);
-            //   return redirect()->route('staff.index');
+            return redirect()->route('staff.index');
 
-            return response()->json(['staff' => $staff]);
+            //return response()->json(['staff' => $staff]);
         } catch (Exception $e) {
-            // return redirect()->back();
+            return redirect()->back();
 
-            return response()->json(['message' => 'Error al actualizar el personal: ' . $e->getMessage()], 400);
+            // return response()->json(['message' => 'Error al actualizar el personal: ' . $e->getMessage()], 400);
         }
     }
 
@@ -137,8 +137,8 @@ class staffController extends Controller
 
         $staff->save();
 
-        return response()->json([$staff]);
-        //   return redirect()->route('staff.index');
+        //return response()->json([$staff]);
+        return redirect()->route('staff.index');
     }
 
 
@@ -149,8 +149,8 @@ class staffController extends Controller
         $staff->isDelete = false;
         $staff->save();
 
-        // return redirect()->route('staff.index');
-        return response()->json(['staff' => $staff]);
+        return redirect()->route('staff.index');
+        // return response()->json(['staff' => $staff]);
     }
 
     public function edit($id)
@@ -161,8 +161,8 @@ class staffController extends Controller
 
     public function create()
     {
-        // return view('staff.create');
-        return response()->json(['staff' => new staff()]);
+        return view('staff.create');
+        // return response()->json(['staff' => new staff()]);
     }
 
     public function editImage($id)

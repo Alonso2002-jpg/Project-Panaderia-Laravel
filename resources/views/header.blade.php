@@ -12,6 +12,16 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('categories.index')}}">Categories</a></li>
                 <li class="nav-item"><a class="nav-link" href="">About Us</a></li>
                 <li class="nav-item"><a class="nav-link nav-link-login" href="#contact">Login</a></li>
+                <li class="nav-item">
+                    <form class="d-flex cart">
+                        <button class="btn btn-outline-light" type="submit">
+                            <i class="fas fa-cart-shopping mx-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form>
+                </li>
+
             </ul>
         </div>
     </div>

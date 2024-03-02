@@ -27,6 +27,6 @@ Route::group(['prefix' => 'staff'], function () {
     Route::put('/{id}', [staffController::class, 'update']);
     Route::delete('/{id}', [staffController::class, 'destroy']);
     Route::get('/{id}/editImage', [staffController::class, 'editImage']);
-    Route::put('/{id}/updateImage', [staffController::class, 'updateImage']);
+    Route::patch('/{id}/updateImage', [staffController::class, 'updateImage']);
     Route::put('/{id}/recover', [staffController::class, 'recover']);
 });

@@ -10,17 +10,20 @@ use Illuminate\Support\Str;
 
 class ProvidersController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $providers = Provider::filtrarProvider($request->search)->orderBy('id', 'asc')->paginate(3);
         return view('providers.index')->with('providers', $providers);
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $provider = Provider::find($id);
         return view('providers.show')->with('provider', $provider);
     }
 
-    public function create(){
+    public function create()
+    {
         return view('providers.create');
     }
 
@@ -32,20 +35,20 @@ class ProvidersController extends Controller
             'telephone' => 'required|regex:/^(6|7|8|9)\d{8}$/'
         ]);
 
-        try{
+        try {
             $provider = new Provider($request->all());
             $provider->save();
             flash('Provider ' . $provider->name . ' created successfully.')->success()->important();
             return redirect()->route('providers.index');
-        } catch (Exception $e){
-            flash('Error creating the provider. '. $e->getMessage())->error()->important();
+        } catch (Exception $e) {
+            flash('Error creating the provider. ' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }
 
     public function edit($id)
     {
-        if($id != 1){
+        if ($id != 1) {
             $provider = Provider::find($id);
             return view('providers.edit')
                 ->with('provider', $provider);
@@ -62,7 +65,7 @@ class ProvidersController extends Controller
             'nif' => 'required|regex:/^[A-Zz-A]{8}\d{1}$/|unique:providers,nif,' . $id,
             'telephone' => 'required|regex:/^(6|7|8|9)\d{8}$/'
         ]);
-        if($id != 1){
+        if ($id != 1) {
             try {
                 $provider = Provider::find($id);
                 $provider->update($request->all());
@@ -86,13 +89,14 @@ class ProvidersController extends Controller
         return view('providers.image')->with('provider', $provider);
     }
 
-    public function updateImage(Request $request, $id){
+    public function updateImage(Request $request, $id)
+    {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        try{
+        try {
             $provider = Provider::find($id);
-            if($provider->image != Provider::$IMAGE_DEFAULT && Storage::exists('public/' . $provider->image)){
+            if ($provider->image != Provider::$IMAGE_DEFAULT && Storage::exists('public/' . $provider->image)) {
                 Storage::delete('public/' . $provider->image);
             }
 
@@ -103,12 +107,11 @@ class ProvidersController extends Controller
             $provider->save();
             flash('Provider ' . $provider->name . ' updated successfully.')->warning()->important();
             return redirect()->route('providers.index');
-        } catch (Exception $e){
-            flash('Error updating the provider'  . $e->getMessage())->error()->important();
+        } catch (Exception $e) {
+            flash('Error updating the provider' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }
-
 
 
     public function destroy($id)

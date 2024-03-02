@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -45,11 +46,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function addresses(){
+    public function addresses()
+    {
         return $this->hasMany(Address::class);
     }
 
-    public function orders(){
+    public function orders()
+    {
         return $this->hasMany(Order::class);
+    }
+
+    public function getCart()
+    {
+        return $this->orders()->where('open', true)->firstOrCreate(['open' => true]);
     }
 }

@@ -9,6 +9,7 @@ class OrderLine extends Model
 {
     use HasFactory;
 
+    protected $table = 'order_lines';
     protected $fillable = [
         'order_id',
         'product_id',
@@ -17,11 +18,13 @@ class OrderLine extends Model
         'linePrice'
     ];
 
-    protected function order(){
+    protected function order()
+    {
         return $this->belongsTo(Order::class);
     }
 
-    protected function product() {
+    protected function product()
+    {
         return $this->belongsTo(Product::class);
     }
 }

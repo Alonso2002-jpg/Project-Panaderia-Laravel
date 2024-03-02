@@ -25,6 +25,7 @@ class staff extends Model
         'startDate' => 'date',
         'endDate' => 'date',
     ];
+    protected $keyType = 'string';
 
 
     public function scopeSearch($query, $search)

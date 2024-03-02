@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
     use HasFactory;
     public static string $IMAGE_DEFAULT = 'https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg';
     protected $table = 'products';

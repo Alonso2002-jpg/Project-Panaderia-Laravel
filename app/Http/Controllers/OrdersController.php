@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,13 @@ class OrdersController extends Controller
             ->where('open', false)
             ->first();
         return view('orders.show')->with('order', $order);
+    }
+
+    public function storeOrder(Request $request){
+        $user = User::find('id', Auth::id());
+        $addresses = $user->addresses();
+        $order = $user->getCart();
+        return view('orders.store')->with('order', $order)->with('address', $addresses);
     }
 
     public function returnOrderById($id)

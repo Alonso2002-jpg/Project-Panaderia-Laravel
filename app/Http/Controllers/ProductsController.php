@@ -20,7 +20,7 @@ class ProductsController extends Controller
 
     public function show($id){
        $product = Product::find($id);
-       $relatedProducts = Product::where('category_id', '=', $product->category_id)->get();
+       $relatedProducts = Product::where('category_id', '=', $product->category_id)->where('id', "<>", $id)->get();
        return view('products.show')->with('product', $product)->with('relatedProducts', $relatedProducts);
     }
 

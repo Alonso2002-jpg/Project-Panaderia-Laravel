@@ -7,11 +7,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+
                 <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('products.index')}}">Products</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('categories.index')}}">Categories</a></li>
+                @auth
+                    @if(auth()->user()->role == 'admin')
+                    <li class="nav-item"><a class="nav-link" href="{{ route('categories.index')}}">Categories</a></li>
+                    @endif
+                    @endauth
                 <li class="nav-item"><a class="nav-link" href="">About Us</a></li>
-                <li class="nav-item"><a class="nav-link nav-link-login" href="#contact">Login</a></li>
+
+                @auth
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                             document.getElementById('logout-form').submit();">
+                        Cerrar Sesión
+                    </a>
+                    <form id="logout-form" method="POST" action="{{ route('logout') }}">@csrf</form>
+                        @else
+                    <li class="nav-item"><a class="nav-link nav-link-login" href="{{ route('login') }}">Login</a></li>
+                @endauth
+
+                <li class="nav-item">
+                    <div class="bg-danger">
+                        <a>{{auth()->user()->role ?? 'invitado'}}</a>
+                    </div>
+                </li>
+
                 <li class="nav-item">
                     <form class="d-flex cart">
                         <button class="btn btn-outline-light" type="submit">

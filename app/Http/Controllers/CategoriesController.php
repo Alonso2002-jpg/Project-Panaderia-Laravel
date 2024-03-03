@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class CategoriesController extends Controller{
+class CategoriesController extends Controller
+{
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $categories = Category::search($request->search)->orderBy('id', 'asc')->paginate(3);
         return view('categories.index')->with('categories', $categories);
     }
@@ -21,11 +23,13 @@ class CategoriesController extends Controller{
         return view('categories.show')->with('category', $category);
     }
 
-    public function create(){
+    public function create()
+    {
         return view('categories.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
             'name' => 'min:4|max:120|required|unique:categories,name',
         ]);
@@ -42,22 +46,24 @@ class CategoriesController extends Controller{
 
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         try {
             $category = Category::find($id);
-            if($category && $id != 1){
+            if ($category && $id != 1) {
                 return view('categories.edit')->with('category', $category);
-            }else{
+            } else {
                 flash('Invalid route')->error()->important();
                 return redirect()->route('categories.index');
             }
-        }catch (Exception $e){
+        } catch (Exception $e) {
             flash('Invalid route')->error()->important();
             return redirect()->route('categories.index');
         }
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'name' => 'min:4|max:120|required|unique:categories,name,' . $id,
         ]);
@@ -74,28 +80,30 @@ class CategoriesController extends Controller{
         }
     }
 
-    public function editImage($id){
+    public function editImage($id)
+    {
         try {
             $category = Category::find($id);
-            if($category){
+            if ($category) {
                 return view('categories.image')->with('category', $category);
             } else {
                 flash('Invalid route')->error()->important();
                 return redirect()->route('categories.index');
             }
-        } catch (Exception $e){
+        } catch (Exception $e) {
             flash('Invalid route')->error()->important();
             return redirect()->route('categories.index');
         }
     }
 
-    public function updateImage(Request $request, $id){
+    public function updateImage(Request $request, $id)
+    {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        try{
+        try {
             $category = Category::find($id);
-            if($category->image != Category::$IMAGE_DEFAULT && Storage::exists('public/' . $category->image)){
+            if ($category->image != Category::$IMAGE_DEFAULT && Storage::exists('public/' . $category->image)) {
                 Storage::delete('public/' . $category->image);
             }
 
@@ -106,27 +114,37 @@ class CategoriesController extends Controller{
             $category->save();
             flash('Category ' . $category->name . ' successfully updated')->warning()->important();
             return redirect()->route('categories.index');
-        } catch (Exception $e){
+        } catch (Exception $e) {
             flash('Error updating Category ' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }
 
-    public function destroy($id){
-        if($id != 1){
-            try{
+    public function destroy($id)
+    {
+        if ($id != 1) {
+            try {
                 $category = Category::find($id);
                 $category->updateProductWithOutCategory($id);
                 $category->delete();
                 flash('Category ' . $category->name . ' successfully removed')->error()->important();
                 return redirect()->route('categories.index');
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 flash('Error when deleting Category' . $e->getMessage())->error()->important();
                 return redirect()->back();
             }
-        }else{
+        } else {
             flash('Invalid route')->error()->important();
             return redirect()->back();
         }
+    }
+
+    public function recover($id)
+    {
+        $category = Category::find($id);
+        $category->isDelete = false;
+        $category->save();
+
+        return redirect()->route('categories.index');
     }
 }

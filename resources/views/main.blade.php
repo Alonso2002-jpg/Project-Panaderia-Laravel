@@ -17,11 +17,8 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link href="{{ asset('images/favicon.png') }}" rel="icon" type="image/png">
 </head>
-
 <body>
-{{-- Esto es el header --}}
 @include('header')
-
 <div class="mx-2 my-2">
     @include('flash::message')
 </div>

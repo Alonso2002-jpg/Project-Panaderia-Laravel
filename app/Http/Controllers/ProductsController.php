@@ -14,7 +14,8 @@ class ProductsController extends Controller
 {
     public function index(Request $request){
         $products = Product::filtrar($request->search)->orderBy($request->orderBy ?? 'id' , $request->order ?? 'asc')->paginate($request->paginate ?? 5);
-        return view('products.index')->with('products', $products);
+        $categories = Category::all();
+        return view('products.index')->with('products', $products)->with('categories', $categories);
     }
 
     public function show($id){

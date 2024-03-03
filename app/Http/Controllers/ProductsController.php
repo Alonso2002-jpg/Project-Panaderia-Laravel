@@ -13,9 +13,12 @@ use Illuminate\Support\Str;
 class ProductsController extends Controller
 {
     public function index(Request $request){
-        $products = Product::filtrar($request->search, $request->category)->orderBy($request->orderBy ?? 'id' , $request->order ?? 'asc')->paginate($request->paginate ?? 5);
+        $products = Product::filtrar($request->search, $request->category, $request->provider)->orderBy($request->orderBy ?? 'id' , $request->order ?? 'asc')->paginate($request->paginate ?? 5);
         $categories = Category::all();
-        return view('products.index')->with('products', $products)->with('categories', $categories);
+        $providers = Provider::all();
+        return view('products.index')->with('products', $products)
+            ->with('categories', $categories)
+            ->with('providers', $providers);
     }
 
     public function show($id){

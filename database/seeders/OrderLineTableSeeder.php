@@ -17,11 +17,10 @@ class OrderLineTableSeeder extends Seeder
         DB::table('order_lines')->insert(
             [
                 [
-                    'id' => Str::uuid(),
-                    'order_id' => '550e8400-e29b-41d4-a716-446655440000',
+                    'order_id' => 1,
                     'product_id' => 'f1c3f5a4-bebd-4619-b136-ba2bcfbd5c9a',
                     'stock' => 1,
-                    'price' => 2.5,
+                    'unitPrice' => 2.5,
                     'totalPrice' => 2.5
                 ]
             ]

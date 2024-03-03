@@ -19,14 +19,9 @@
 </head>
 <body>
 @include('header')
-<<<<<<< HEAD
-<div class="mx-2 my-2">
+<div class="mx-2">
     @include('flash::message')
 </div>
-=======
-
-
->>>>>>> feature/AddingHeaders
 
 {{-- Esto es el contenido --}}
 @yield('content')

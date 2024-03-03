@@ -19,7 +19,7 @@ class ProductTableSeeder extends Seeder
         DB::table('products')->insert(
             [
                 [
-                    'id' => Str::uuid(),
+                    'id' => 'f1c3f5a4-bebd-4619-b136-ba2bcfbd5c9a',
                     'name' => 'Milk Bread',
                     'description' => 'Soft and fluffy bread enriched with milk, creating a tender crumb and a slightly sweet flavor.',
                     'price' => 2.5,

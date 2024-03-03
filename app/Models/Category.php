@@ -48,6 +48,12 @@ class Category extends Model
 
     public function scopeSearch($query, $search){
         return $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"]);
+
+        if ($category && $category->id != 1) {
+            $query->where('category_id', $category);
+        }
+
+        return $query;
     }
 
     public function products(){

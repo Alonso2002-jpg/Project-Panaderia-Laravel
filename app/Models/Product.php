@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Poto;
 
 class Product extends Model
 {
@@ -36,10 +37,18 @@ class Product extends Model
         return $this->belongsTo(Provider::class);
     }
 
-    public function scopeFiltrar($query, $search)
+    public function scopeFiltrar($query, $search, $category, $provider)
     {
-        return $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"]);
+        $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"]);
+        if($category && $category != 1){
+            $query->where('category_id', $category);
+        }
+        if($provider && $provider != 1){
+            $query->where('provider_id', $provider);
+        }
+        return $query;
     }
 
 }
+
 

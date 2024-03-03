@@ -3,7 +3,16 @@
 
 @section('title', 'Product Details')
 @section('content')
+<<<<<<< HEAD
     @include('products.normalhead')
+=======
+    <header class="masthead">
+        <div class="container">
+            <div class="masthead-subheading">Know More!</div>
+            <div class="masthead-heading text-uppercase">Yummy information!</div>
+        </div>
+    </header>
+>>>>>>> feature/AddingHeaders
     <section id="product_{{ $product->id }}" class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">

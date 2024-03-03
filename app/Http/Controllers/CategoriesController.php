@@ -50,7 +50,7 @@ class CategoriesController extends Controller
     {
         try {
             $category = Category::find($id);
-            if ($category && $id != 1) {
+            if ($category && $id != 0) {
                 return view('categories.edit')->with('category', $category);
             } else {
                 flash('Invalid route')->error()->important();
@@ -72,7 +72,7 @@ class CategoriesController extends Controller
             $category = Category::find($id);
             $category->name = strtoupper($request->name);
             $category->save();
-            flash('Category ' . $category->name . ' successfully updated')->warning()->important();
+            flash('Category ' . $category->name . ' successfully updated')->success()->important();
             return redirect()->route('categories.index');
         } catch (Exception $e) {
             flash('There is already another category with the same name')->error()->important();
@@ -127,7 +127,7 @@ class CategoriesController extends Controller
                 $category = Category::find($id);
                 $category->updateProductWithOutCategory($id);
                 $category->delete();
-                flash('Category ' . $category->name . ' successfully removed')->error()->important();
+                flash('Category ' . $category->name . ' successfully removed')->success()->important();
                 return redirect()->route('categories.index');
             } catch (Exception $e) {
                 flash('Error when deleting Category' . $e->getMessage())->error()->important();

@@ -13,6 +13,8 @@
                 @auth
                     @if(auth()->user()->role == 'admin')
                     <li class="nav-item"><a class="nav-link" href="{{ route('categories.index')}}">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('providers.index')}}">Providers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('staff.index')}}">Staff</a></li>
                     @endif
                     @endauth
                 <li class="nav-item"><a class="nav-link" href="{{route('about')}}">About Us</a></li>

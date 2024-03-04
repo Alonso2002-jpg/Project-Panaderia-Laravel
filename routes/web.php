@@ -76,7 +76,8 @@ Route::group(['prefix' => 'email'], function () {
     Route::get('/invoice/{email}', [MailableController::class, 'sendInVoice'])->name('email.invoice');
     Route::get('/forgot/{email}', [MailableController::class, 'sendForgotPass'])->name('email.forgot');
 });
-
+Route::get('/about', function () { return view('about'); })->name('about');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

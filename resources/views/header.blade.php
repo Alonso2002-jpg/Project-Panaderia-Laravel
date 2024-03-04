@@ -15,7 +15,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('categories.index')}}">Categories</a></li>
                     @endif
                     @endauth
-                <li class="nav-item"><a class="nav-link" href="">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{route('about')}}">About Us</a></li>
 
                 @auth
                     <a href="{{ route('logout') }}"
@@ -29,8 +29,8 @@
                 @endauth
 
                 <li class="nav-item">
-                    <div class="bg-danger">
-                        <a>{{auth()->user()->role ?? 'invitado'}}</a>
+                    <div class="bg-warning-subtle rounded">
+                        <a>{{auth()->user()->role ?? '¡ Bienvenido invitado! '}}</a>
                     </div>
                 </li>
 

@@ -14,7 +14,7 @@
     <div class="container">
         <h2>Our Categories</h2>
                 <div class="row">
-                        <div class="col-md-3"><!--Boton para crear categorias -->
+                        <div class="col-md-3">
                             <a class="btn btn-primary" href="{{ route('categories.create') }}">Create Category</a>
                         </div>
                     <table class="table">
@@ -31,8 +31,8 @@
                                 @if($category->id!=1)
                                 <td><img src="{{ asset('storage/' . $category->image) }}" style="width: 45px"></td>
                                     <td>{{ $category->name }}</td>
-                                <td><button><a href="{{ route('categories.edit', $category->id) }}">Edit</a></button>
-                                    <button><a href="{{ route('categories.editImage', $category->id) }}">EditImage</a></button>
+                                <td><button><a class="btn btn-primary" href="{{ route('categories.edit', $category->id) }}">Edit</a></button>
+                                    <button><a class="btn btn-secondary" href="{{ route('categories.editImage', $category->id) }}">EditImage</a></button>
                                     <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

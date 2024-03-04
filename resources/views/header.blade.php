@@ -29,8 +29,8 @@
                 @endauth
 
                 <li class="nav-item">
-                    <div class="bg-danger">
-                        <a>{{auth()->user()->role ?? 'invitado'}}</a>
+                    <div class="bg-warning-subtle rounded">
+                        <a>{{auth()->user()->role ?? '¡ Bienvenido invitado! '}}</a>
                     </div>
                 </li>
 

@@ -13,16 +13,20 @@
                 @auth
                     @if(auth()->user()->role == 'admin')
                     <li class="nav-item"><a class="nav-link" href="{{ route('categories.index')}}">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('providers.index')}}">Providers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('staff.index')}}">Staff</a></li>
                     @endif
                     @endauth
                 <li class="nav-item"><a class="nav-link" href="{{route('about')}}">About Us</a></li>
 
                 @auth
-                    <a href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
+                    <li class="nav-item">
+                        <a href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">
-                        Cerrar Sesión
-                    </a>
+                            Logout
+                        </a>
+                    </li>
                     <form id="logout-form" method="POST" action="{{ route('logout') }}">@csrf</form>
                         @else
                     <li class="nav-item"><a class="nav-link nav-link-login" href="{{ route('login') }}">Login</a></li>

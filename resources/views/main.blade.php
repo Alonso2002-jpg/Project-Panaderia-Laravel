@@ -19,9 +19,6 @@
 </head>
 <body>
 @include('header')
-<div class="mx-2">
-    @include('flash::message')
-</div>
 
 {{-- Esto es el contenido --}}
 @yield('content')

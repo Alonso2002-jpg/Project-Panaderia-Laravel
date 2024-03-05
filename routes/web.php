@@ -70,7 +70,6 @@ Route::group(['prefix' => 'staff'], function () {
     Route::put('/{staff}/recover', [StaffController::class, 'recover'])->name('staff.recover');//->middleware(['auth', 'admin']);
 });
 
-
 Route::group(['prefix' => 'email'], function () {
     Route::get('/register/{email}', [MailableController::class, 'sendRegister'])->name('email.register');
     Route::get('/invoice/{email}', [MailableController::class, 'sendInVoice'])->name('email.invoice');

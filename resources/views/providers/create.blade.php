@@ -5,7 +5,6 @@
 @section('title', 'Miga de Oro - Providers')
 
 @section('content')
-
     <header class="masthead">
         <div class="container">
             <div class="masthead-subheading">Know about our Providers!</div>
@@ -21,12 +20,12 @@
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
                 <label for="nif">NIF</label>
-                <input type="text" class="form-control" id="nif" name="nif" required>
+                <input type="text" class="form-control" id="nif" name="nif" required pattern="[0-9]{8}[A-Za-z]{1}">
                 <label for="telephone">Telephone</label>
-                <input type="text" class="form-control" id="telephone" name="telephone" required>
+                <input type="text" class="form-control" id="telephone" name="telephone" pattern="[6-9]\d{8}" required>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
-
+        </form>
             @if($errors ->any())
                 <div class="alert alert-danger">
                     <ul>@foreach($errors->all( ) as $error)

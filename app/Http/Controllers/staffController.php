@@ -45,7 +45,7 @@ class staffController extends Controller
     public function destroy($id)
     {
         try {
-            $staff = Staff::find($id);
+            $staff = staff::find($id);
 
             if (!$staff) {
                 Session::flash('error', 'Personal no encontrado.');
@@ -174,22 +174,22 @@ class staffController extends Controller
     public function updateImage(Request $request, $id)
     {
         $request->validate([
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
             $staff = staff::find($id);
-            if ($staff->image != staff::$IMAGE_DEFAULT && Storage::exists($staff->image)) {
+            if ($staff->image != staff::$IMAGE_DEFAULT && Storage::exists('public/' . $staff->image)) {
                 Storage::delete('public/' . $staff->image);
             }
-            $imagen = $request->file('imagen');
-            $extension = $imagen->getClientOriginalExtension();
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
             $fileToSave = Str::uuid() . '.' . $extension;
-            $staff->image = $imagen->storeAs('staff', $fileToSave, 'public');
+            $staff->image = $image->storeAs('staff', $fileToSave, 'public');
             $staff->save();
-            flash('Personal ' . $staff->name . ' actualizado con éxito')->warning()->important();
+            flash('Personal ' . $staff->name . ' actualizado con éxito')->success()->important();
             return redirect()->route('staff.index');
         } catch (Exception $e) {
-            flash('error', 'Error al actualizar el personal' . $e->getMessage());
+            flash('error', 'Error al actualizar el personal' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }

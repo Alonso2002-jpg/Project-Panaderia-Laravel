@@ -26,10 +26,8 @@
                 <input type="email" class="form-control" id="email" name="email" required>
                 <label for="lastname">Lastname</label>
                 <input type="text" class="form-control" id="lastname" name="lastname" required>
-                <label for="startDate">Start Date</label>
-                <input type="date" class="form-control" id="startDate" name="startDate" required>
-                <label for="endDate">End Date</label>
-                <input type="date" class="form-control" id="endDate" name="endDate" required>
+                <label for="role">Role</label>
+                <input type="text" class="form-control" id="role" name="role" required>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
 

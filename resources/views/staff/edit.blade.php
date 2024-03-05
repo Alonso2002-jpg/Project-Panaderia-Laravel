@@ -25,10 +25,8 @@
                 <input type="email" class="form-control" id="email" name="email" value="{{ $staff->email }}">
                 <label for="lastname">Lastname</label>
                 <input type="text" class="form-control" id="lastname" name="lastname" value="{{ $staff->lastname }}">
-                <label for="startDate">Start Date</label>
-                <input type="date" class="form-control" id="startDate" name="startDate" value="{{ $staff->startDate }}">
-                <label for="endDate">End Date</label>
-                <input type="date" class="form-control" id="endDate" name="endDate" value="{{ $staff->endDate }}">
+                <label for="role">Role</label>
+                <input type="text" class="form-control" id="role" name="role" value="{{ $staff->role }}">
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
 

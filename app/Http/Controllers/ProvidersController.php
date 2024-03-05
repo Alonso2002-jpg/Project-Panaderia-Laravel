@@ -31,8 +31,8 @@ class ProvidersController extends Controller
     {
         $request->validate([
             'name' => 'min:3|max:120|required|unique:providers,name',
-            'nif' => 'required|unique:providers,nif|regex:/^[A-Zz-A]{8}\d{1}$/',
-            'telephone' => 'required|regex:/^(6|7|8|9)\d{8}$/'
+            'nif' => 'required|unique:providers,nif',
+            'telephone' => 'min:9|max:9'
         ]);
 
         try {
@@ -62,15 +62,15 @@ class ProvidersController extends Controller
     {
         $request->validate([
             'name' => 'min:3|max:120|required|unique:providers,name,' . $id,
-            'nif' => 'required|regex:/^[A-Zz-A]{8}\d{1}$/|unique:providers,nif,' . $id,
-            'telephone' => 'required|regex:/^(6|7|8|9)\d{8}$/'
+            'nif' => 'min:3|max:120|required|unique:providers,nif,' . $id,
+            'telephone' => 'min:9|max:9'
         ]);
         if ($id != 1) {
             try {
                 $provider = Provider::find($id);
                 $provider->update($request->all());
                 $provider->save();
-                flash('Provider ' . $provider->name . ' updated successfully.')->warning()->important();
+                flash('Provider ' . $provider->name . ' updated successfully.')->success()->important();
                 return redirect()->route('providers.index');
             } catch (Exception $e) {
                 flash('Error updating the provider' . $e->getMessage())->error()->important();

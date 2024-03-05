@@ -22,25 +22,23 @@
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
+                    <th>Lastname</th>
                     <th>Dni</th>
                     <th>Email</th>
-                    <th>Lastname</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>Role</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                @foreach($staff as $staff)
+                @foreach($personal as $staff)
                     <tr>
                         @if($staff->id!=1)
                             <td><img src="{{ asset('storage/' . $staff->image) }}" style="width: 45px"></td>
                             <td>{{ $staff->name }}</td>
+                            <td>{{ $staff->lastname }}</td>
                             <td>{{ $staff->dni }}</td>
                             <td>{{ $staff->email }}</td>
-                            <td>{{ $staff->lastname }}</td>
-                            <td>{{ $staff->startDate }}</td>
-                            <td>{{ $staff->endDate }}</td>
+                            <td>{{ $staff->role }}</td>
                             <td>
                                 <button><a class="btn btn-primary" href="{{ route('staff.edit', $staff->id) }}">Edit</a>
                                 </button>
@@ -63,7 +61,7 @@
                 </tbody>
             </table>
             <div class="pagination-container">
-                {{ $people->links('pagination::bootstrap-4') }}
+                {{ $personal->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>

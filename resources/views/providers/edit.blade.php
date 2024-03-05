@@ -13,7 +13,7 @@
     </header>
     <div class="container">
         <h2>Edit Provider</h2>
-        <form action="{{ route('providers.edit', $provider->id) }}" method="POST">
+        <form action="{{ route('providers.update', $provider->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -25,12 +25,12 @@
                 <input type="text" class="form-control" id="telephone" name="telephone" value="{{ $provider->telephone }}">
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
-
-            @if($errors ->any())
+        </form>
+    @if($errors ->any())
                 <div class="alert alert-danger">
                     <ul>@foreach($errors->all( ) as $error)
                             <li>{{ $error }}</li>
                         @endforeach</ul>
             @endif
-        </form>
     </div>
+    @endsection

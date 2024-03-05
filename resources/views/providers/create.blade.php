@@ -5,7 +5,6 @@
 @section('title', 'Miga de Oro - Providers')
 
 @section('content')
-
     <header class="masthead">
         <div class="container">
             <div class="masthead-subheading">Know about our Providers!</div>
@@ -26,7 +25,7 @@
                 <input type="text" class="form-control" id="telephone" name="telephone" required>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
-
+        </form>
             @if($errors ->any())
                 <div class="alert alert-danger">
                     <ul>@foreach($errors->all( ) as $error)

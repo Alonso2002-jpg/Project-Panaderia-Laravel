@@ -26,6 +26,7 @@
                     <th>Dni</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th>State</th>
                 </tr>
                 </thead>
 
@@ -39,24 +40,26 @@
                             <td>{{ $staff->dni }}</td>
                             <td>{{ $staff->email }}</td>
                             <td>{{ $staff->role }}</td>
+                            <td>{{ $staff->isDelete  ? 'deleted' : 'Active'}}</td>
                             <td>
-                                <button><a class="btn btn-primary" href="{{ route('staff.edit', $staff->id) }}">Edit</a>
-                                </button>
-                                <button><a class="btn btn-secondary"
-                                           href="{{ route('staff.editImage', $staff->id) }}">EditImage</a>
-                                </button>
-                                <form action="{{ route('staff.destroy', $staff->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete
-                                    </button>
-                                </form>
+                                <button><a class="btn btn-primary" href="{{ route('staff.edit', $staff->id) }}">Edit</a></button>
+                                <button><a class="btn btn-secondary" href="{{ route('staff.editImage', $staff->id) }}">EditImage</a></button>
+
+                                @if($staff->isDelete)
+                                    <form action="{{ route('staff.recover', $staff->id) }}" method="POST" style="display: inline-block;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-warning btn-sm">Recover</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('staff.destroy', $staff->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
                                 @endif
                             </td>
-
+                        @endif
                     </tr>
-
                 @endforeach
                 </tbody>
             </table>

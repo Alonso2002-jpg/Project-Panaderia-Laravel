@@ -67,7 +67,14 @@ Route::group(['prefix' => 'staff'], function () {
     Route::delete('/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy')->middleware(['auth', 'admin']);
     Route::get('/{staff}/edit-image', [StaffController::class, 'editImage'])->name('staff.editImage')->middleware(['auth', 'admin']);
     Route::patch('/{staff}/update-image', [StaffController::class, 'updateImage'])->name('staff.updateImage')->middleware(['auth', 'admin']);
-    Route::put('/{staff}/recover', [StaffController::class, 'recover'])->name('staff.recover')->middleware(['auth', 'admin']);
+    Route::post('/{staff}/recover', [StaffController::class, 'recover'])->name('staff.recover')->middleware(['auth', 'admin']);
+});
+Route::group(['prefix' => 'gestion'], function () {
+    Route::get('/products', [ProductsController::class, 'products'])->name('gestion.products')->middleware(['auth', 'admin']);
+    Route::get('/providers', [ProvidersController::class, 'index'])->name('gestion.providers')->middleware(['auth', 'admin']);
+    Route::get('/staff', [staffController::class, 'staff'])->name('gestion.staff')->middleware(['auth', 'admin']);
+    Route::get('/categories', [CategoriesController::class, 'categories'])->name('gestion.categories')->middleware(['auth', 'admin']);
+
 });
 
 

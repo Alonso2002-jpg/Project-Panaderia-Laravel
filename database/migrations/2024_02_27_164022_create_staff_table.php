@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('lastname');
             $table->date('startDate');
             $table->date('endDate')->nullable();
-            $table->string('image');
+            $table->string('image')->default('https://');
             $table->enum('role', ['baker', 'cashier', 'manager', 'steward', 'cleaner', 'pastry_chef', 'inventory_manager'])->nullable()->default('baker');
             $table->boolean('isDelete')->default(false);
             $table->timestamps();

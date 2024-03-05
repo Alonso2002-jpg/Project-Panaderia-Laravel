@@ -18,7 +18,6 @@ return new class extends Migration
             $table->decimal('totalPrice', 10, 2)->default(0.0);
             $table->decimal('tax', 10, 2)->default(0.0);
             $table->decimal('total', 10, 2)->default(0.0);
-            $table->boolean('open')->default(true);
             $table->timestamps();
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
@@ -25,11 +26,18 @@ Route::get('/', function () {
     return view('index')->with('categories', $categories);
 })->name('home');
 
+Route::group(['prefix' => 'cart'], function () {
+   Route::get('/', [CartController::class, 'showCart'])->name('cart');
+   Route::put('/', [CartController::class, 'updateCartLine'])->name('cart.update');
+   Route::delete('/', [CartController::class, 'destroyCartLine'])->name('cart.destroy');
+});
+
 Route::group(['prefix' => 'products'], function () {
     Route::get('/', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/create', [ProductsController::class, 'create'])->name('products.create')->middleware(['auth', 'admin']);
     Route::post('/', [ProductsController::class, 'store'])->name('products.store')->middleware(['auth','admin']);
     Route::get('/{product}', [ProductsController::class, 'show'])->name('products.show');
+    Route::post('/{product}', [ProductsController::class, 'addToCart'])->name('addToCart');
     Route::get('/{product}/edit', [ProductsController::class, 'edit'])->name('products.edit')->middleware(['auth','admin']);
     Route::put('/{product}', [ProductsController::class, 'update'])->name('products.update')->middleware(['auth','admin']);
     Route::delete('/{product}', [ProductsController::class, 'destroy'])->name('products.destroy')->middleware(['auth','admin']);

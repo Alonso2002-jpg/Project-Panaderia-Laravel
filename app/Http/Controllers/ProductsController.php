@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Provider;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -19,6 +20,30 @@ class ProductsController extends Controller
         return view('products.index')->with('products', $products)
             ->with('categories', $categories)
             ->with('providers', $providers);
+    }
+
+    public function addToCart(Request $request, $id){
+        try {
+            $product = Product::find($id);
+            $request->validate([
+                'stock' => 'required|gt:0|lte:' . $product->stock,
+            ]);
+            $cart = Session::get('cart', []);
+            $totalItems = Session::get('totalItems', 0);
+            $totalItems += $request->stock;
+            $newItem = [
+                'product_id' => $product->id,
+                'stock' => $request->stock,
+            ];
+            $cart[] = $newItem;
+            Session::put('cart', $cart);
+            Session::put('totalItems', $totalItems);
+            flash($request->stock . ' ' . $product->name . ' added to cart.')->success()->important();
+            return redirect()->back();
+        } catch (Exception $e) {
+            flash('Error adding ' . $product->name . ' to cart.')->error()->important();
+            return redirect()->back();
+        }
     }
 
     public function show($id){
@@ -91,6 +116,19 @@ class ProductsController extends Controller
             $product->category_id = $request->category ?? 1;
             $product->provider_id = $request->provider ?? 1;
             $product->save();
+            $cart = Session::get('cart', []);
+
+            $totalItems = Session::get('totalItems', 0);
+            $totalToRemove = 0;
+
+            foreach ($cart as $key => $item) {
+                if ($item['product_id'] == $id) {
+                    $totalToRemove += $item['stock'];
+                    unset($cart[$key]);
+                }
+            }
+            Session::put('cart', array_values($cart));
+            Session::put('totalItems', max(0, $totalItems - $totalToRemove));
             flash('Product ' . $product->name . ' updated successfully.')->warning()->important();
             return redirect()->route('products.index');
         } catch (Exception $e) {
@@ -114,7 +152,6 @@ class ProductsController extends Controller
             if($product->image != Product::$IMAGE_DEFAULT && Storage::exists('public/' . $product->image)){
                 Storage::delete('public/' . $product->image);
             }
-
             $image = $request->file('image');
             $extension = $image->getClientOriginalExtension();
             $fileToSave = $product->id . '.' . $extension;
@@ -137,6 +174,19 @@ class ProductsController extends Controller
                 Storage::delete('public/' . $product->image);
             }
             $product->delete();
+            $cart = Session::get('cart', []);
+
+            $totalItems = Session::get('totalItems', 0);
+            $totalToRemove = 0;
+
+            foreach ($cart as $key => $item) {
+                if ($item['product_id'] == $id) {
+                    $totalToRemove += $item['stock'];
+                    unset($cart[$key]);
+                }
+            }
+            Session::put('cart', array_values($cart));
+            Session::put('totalItems', max(0, $totalItems - $totalToRemove));
             flash('Product ' . $product->name . ' deleted successfully.')->error()->important();
             return redirect()->route('products.index');
         } catch (Exception $e) {

@@ -23,13 +23,13 @@ class AddressesController extends Controller
 
     public function getAddressById($id)
     {
-        $address = Address::where('id', $id)->first();
+        $address = Address::find($id);
         return view('address.show')->with('address', $address);
     }
 
     public function getMeAddressById($id)
     {
-        $address = Address::where('id', $id)
+        $address = Address::find($id)
             ->where('user_id', Auth::id())
             ->first();
         return view('address.show')->with('address', $address);
@@ -70,13 +70,13 @@ class AddressesController extends Controller
 
     public function editMeAddress($id)
     {
-        $address = Address::where('id', $id)->where('user_id', Auth::id())->first();
+        $address = Address::find($id)->where('user_id', Auth::id())->first();
         return view('addresses.edit')->with('address', $address);
     }
 
     public function editAddress($id)
     {
-        $address = Address::where('id', $id)->first();
+        $address = Address::find($id)->first();
         return view('addresses.edit')->with('address', $address);
     }
 
@@ -96,7 +96,7 @@ class AddressesController extends Controller
         ]);
 
         try {
-            $address = Address::where('id', $id)->where('user_id', Auth::id())->first();
+            $address = Address::find($id)->where('user_id', Auth::id())->first();
             $address->update($request->all());
             flash('Address updated successfully.')->warning()->important();
             return redirect()->route('addresses.index');
@@ -122,7 +122,7 @@ class AddressesController extends Controller
     public function destroyMeAddress($id)
     {
         try {
-            $address = Address::where('id', $id)
+            $address = Address::find($id)
                 ->where('user_id', Auth::id())
                 ->first();
             $address->delete();

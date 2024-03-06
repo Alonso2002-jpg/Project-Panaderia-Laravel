@@ -43,4 +43,70 @@
         </div>
 
     </section>
+    <div class="card mb-1 m-4">
+        <div class="row col-lg-12">
+            <div class="col-md-3">
+                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Chocolate Cookies!</h5>
+                    <p class="card-text">Our Chocolate Cookies is the best chocolate cookies ever made by hand!
+                    Savoured by our costumers, this is the best chocolate cookies ever!, Don't miss this amazing
+                        cookies from us! Take a look!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-1 m-4">
+        <div class="row col-lg-12">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Chocolate Cupcakes!</h5>
+                    <p class="card-text">Our Chocolate Cupcakes is the most precious chocolate you had ever tasted, made by hand!
+                        Savoured by our costumers, this is the best of the best ever!, Don't miss this amazing
+                        product from us! Take a look!
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px">
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-1 m-4">
+        <div class="row col-lg-12">
+            <div class="col-md-3">
+                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Mineral Water!</h5>
+                    <p class="card-text">Our Mineral Water is the best water you had ever tasted, taking freshly from the mountains!
+                        Savoured by our costumers, this is the best water they had ever tried!, Don't miss this amazing
+                        water from us! Take a look!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-1 m-4">
+        <div class="row col-lg-12">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Milk Bread!</h5>
+                    <p class="card-text">Our Milk Bread is the best bread you had ever received from the farm!
+                        Savoured by our customers, this is the best of the best they had ever tried!, Don't miss this amazing
+                        opportunity from tasting this bread from us! Take a look!
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px">
+            </div>
+        </div>
+    </div>
+
 @endsection

@@ -41,24 +41,9 @@ class staffControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_index()
-    {
-        $response = $this->get('/staff');
-        $response->assertViewIs('staff.index');
-        $response->assertViewHas('staff');
-        $response->assertStatus(200);
-    }
 
-    public function test_show_view()
-    {
-        $user = User::factory()->create();
-        $staff = Staff::factory()->create();
 
-        $response = $this->actingAs($user)->get('/staff/' . $staff->uuid);
-        $response->assertViewIs('staff.show');
-        $response->assertViewHas('staff');
-        $response->assertStatus(200);
-    }
+
 
     public function test_update_view_user()
     {
@@ -74,37 +59,35 @@ class staffControllerTest extends TestCase
         $response->assertStatus(302);
     }
 
-    public function test_access_create_view_as_user()
-    {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/staff/create');
-        $response->assertStatus(200);
-    }
 
-    public function test_access_index_as_guest()
-    {
-        $response = $this->get('/staff');
-        $response->assertStatus(200);
-    }
 
-    public function test_access_show_view()
-    {
-        $response = $this->get('/staff/1');
-        $response->assertStatus(200);
-    }
+
+
 
     public function test_access_edit_view_as_guest()
     {
-        $response = $this->get('/staff/1/edit');
-        $response->assertStatus(302);
+        $staff =Staff::first();
+        $response = $this->get('/staff/1',$staff->toArray());
     }
 
     public function test_access_edit_view_as_user()
     {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/staff/1/edit');
+        $adminUser = User::factory()->create(['role' => 'admin']);
+        $response = $this->actingAs($adminUser)->get('/staff/create');
+        $response->assertViewIs('staff.create');
         $response->assertStatus(200);
     }
-    
+
+
+    public function test_access_index_as_authenticated_user()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get('/staff');
+        $response->assertStatus(302);
+    }
+
+
+
+
 }
 

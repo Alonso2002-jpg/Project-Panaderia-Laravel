@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -19,7 +20,12 @@ class CategoriesController extends Controller
 
     public function show($id)
     {
-        $category = Category::find($id);
+        if(Cache::has('category' . $id)){
+            $category = Cache::get('category' . $id);
+        } else {
+            $category = Category::find($id);
+        }
+        Cache::put('category' . $id, $category, 300);
         return view('categories.show')->with('category', $category);
     }
 
@@ -67,11 +73,11 @@ class CategoriesController extends Controller
         $request->validate([
             'name' => 'min:4|max:120|required|unique:categories,name,' . $id,
         ]);
-
         try {
             $category = Category::find($id);
             $category->name = strtoupper($request->name);
             $category->save();
+            Cache::forget('category' . $id);
             flash('Category ' . $category->name . ' successfully updated')->success()->important();
             return redirect()->route('categories.index');
         } catch (Exception $e) {
@@ -112,6 +118,7 @@ class CategoriesController extends Controller
             $fileToSave = Str::uuid() . '.' . $extension;
             $category->image = $image->storeAs('category', $fileToSave, 'public');
             $category->save();
+            Cache::forget('category' . $id);
             flash('Category ' . $category->name . ' successfully updated')->warning()->important();
             return redirect()->route('categories.index');
         } catch (Exception $e) {
@@ -127,6 +134,7 @@ class CategoriesController extends Controller
                 $category = Category::find($id);
                 $category->updateProductWithOutCategory($id);
                 $category->delete();
+                Cache::forget('category' . $id);
                 flash('Category ' . $category->name . ' successfully removed')->success()->important();
                 return redirect()->route('categories.index');
             } catch (Exception $e) {
@@ -144,7 +152,7 @@ class CategoriesController extends Controller
         $category = Category::find($id);
         $category->isDelete = false;
         $category->save();
-
+        Cache::forget('category' . $id);
         return redirect()->route('categories.index');
     }
 }

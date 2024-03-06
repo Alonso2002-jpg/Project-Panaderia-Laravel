@@ -11,17 +11,26 @@ use Tests\TestCase;
 
 class ProductsControllerTest extends TestCase{
 
+    use RefreshDatabase;
     protected function setUp(): void{
     parent::setUp();
     $this->artisan('migrate:fresh');
     $this->artisan('db:seed');
-}
+    }
 
     public function text_index() {
         $response = $this->get('/products');
         $response->assertViewIs('products.index');
         $response->assertViewHas('products');
         $response->assertStatus(200);
+    }
+
+    public function test_show_view(){
+        $product = Product::first();
+        $response = $this->get(route('products.show', $product->id));
+        $response->assertStatus(200);
+        $response->assertViewIs('products.show');
+        $response->assertViewHas('product', $product);
     }
 
     public function test_create_view_user(){

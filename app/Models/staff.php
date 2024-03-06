@@ -27,7 +27,9 @@ class staff extends Model
     ];
     protected $keyType = 'string';
 
-
+    /**
+     * Get the user that owns the staff
+     */
     public function scopeSearch($query, $search)
     {
         return $query->whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($search) . "%"])

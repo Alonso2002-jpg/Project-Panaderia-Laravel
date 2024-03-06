@@ -6,6 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class staffRequest extends FormRequest
 {
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array The validation rules.
+     */
+
     public function rules(): array
     {
         return [

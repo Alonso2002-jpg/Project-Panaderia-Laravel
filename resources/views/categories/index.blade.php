@@ -5,12 +5,7 @@
 @section('title', 'Miga de Oro - Categories')
 
 @section('content')
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Know about our Categories!</div>
-            <div class="masthead-heading text-uppercase">Yum Yummy!</div>
-        </div>
-    </header>
+    @include('normalhead')
     <div class="container">
         <h2>Our Categories</h2>
                 <div class="row">

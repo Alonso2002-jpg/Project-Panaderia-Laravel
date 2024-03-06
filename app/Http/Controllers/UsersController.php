@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailableController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,4 +41,17 @@ class UsersController extends Controller
         flash('User ' . $user->name . ' updated successfully.')->warning()->important();
         return redirect()->route('users.detail');
     }
+
+    public function passwordForgotten(Request $request){
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+        $user = User::where('email', $request->email);
+        if($user){
+            $mailableController = new MailableController();
+            $mailableController->sendForgotPass($user->email);
+        }
+        return redirect()->back();
+    }
+
 }

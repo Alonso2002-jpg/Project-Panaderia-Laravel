@@ -17,9 +17,10 @@
                                 Data Management
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="#">Categories</a></li>
-                                <li><a class="dropdown-item" href="#">Providers</a></li>
-                                <li><a class="dropdown-item" href="#">Staff</a></li>
+                                <li><a class="dropdown-item" href="{{route('gestion.products')}}">Products</a></li>
+                                <li><a class="dropdown-item" href="{{route('categories.index')}}">Categories</a></li>
+                                <li><a class="dropdown-item" href="{{route('providers.index')}}">Providers</a></li>
+                                <li><a class="dropdown-item" href="{{route('staff.index')}}">Staff</a></li>
                             </ul>
                         </li>
 

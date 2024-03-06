@@ -13,7 +13,7 @@
     </header>
 
     <div class="container">
-        <h2>Create a Provider</h2>
+        <h2>Create a Product</h2>
         <form action="{{ route('products.store') }}" method="POST">
             @csrf
             <div class="form-group">

@@ -40,6 +40,12 @@ class ProductsController extends Controller
             ->with('providers', $providers);
     }
 
+    public function products()
+    {
+        $products = Product::orderBy('id', 'asc')->paginate(5);
+        return view('products.gestion')->with('products', $products);
+    }
+
     /**
      * Adds a specified quantity of a product to the shopping cart.
      *

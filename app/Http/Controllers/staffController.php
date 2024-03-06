@@ -31,14 +31,12 @@ class staffController extends Controller
         $personal = $personal->paginate(3);
 
         return view('staff.index')->with('personal', $personal);
-        // return response()->json(['personal' => $personal]);
     }
 
     public function show($id)
     {
         $staff = staff::find($id);
         return view('staff.show')->with('staff', $staff);
-        // return response()->json(['staff' => $staff]);
 
     }
 
@@ -50,27 +48,24 @@ class staffController extends Controller
             if (!$staff) {
                 Session::flash('error', 'Personal no encontrado.');
                 return redirect()->back();
-                //return response()->json(['message' => 'Personal no encontrado'], 404);
             }
 
 
-            if ($staff->image != 'ruta/a/imagen_por_defecto.jpg' && Storage::exists('public/' . $staff->image)) {
+            if ($staff->image != 'https://via.placeholder.com/150' && Storage::exists('public/' . $staff->image)) {
                 Storage::delete('public/' . $staff->image);
             }
 
             $staff->isDelete = true;
             $staff->endDate = Carbon::now();
             $staff->save();
-            Session::flash('success', 'Personal eliminado con éxito.');
+            Session::flash('success', 'Personnel successfully eliminated.');
 
         } catch (\Exception $e) {
-            Session::flash('error', 'Error al eliminar el personal: ' . $e->getMessage());
+            Session::flash('error', 'Error when deleting staff: ' . $e->getMessage());
             return redirect()->back();
-            // return response()->json(['message' => 'Error al eliminar el personal: ' . $e->getMessage()], 400);
         }
 
         return redirect()->route('staff.index');
-        //return response()->json(['staff' => $staff]);
     }
 
     public function update(Request $request, $id)
@@ -79,7 +74,6 @@ class staffController extends Controller
         if (!$staff) {
             return redirect()->back();
 
-            //return response()->json(['message' => 'Personal no encontrado'], 404);
         }
 
         $validatedData = $request->validate([
@@ -102,11 +96,9 @@ class staffController extends Controller
             $staff->update($validatedData);
             return redirect()->route('staff.index');
 
-            //return response()->json(['staff' => $staff]);
         } catch (Exception $e) {
             return redirect()->back();
 
-            // return response()->json(['message' => 'Error al actualizar el personal: ' . $e->getMessage()], 400);
         }
     }
 
@@ -132,17 +124,16 @@ class staffController extends Controller
         if ($request->hasFile('image')) {
             $staff->image = $request->file('image')->store('public/staff');
         } else {
+            
             $staff->image = staff::$IMAGE_DEFAULT;
         }
 
         $staff->save();
-
-        //return response()->json([$staff]);
+        Session::flash('success', 'Personal ' . $staff->name . ' successfully created');
         return redirect()->route('staff.index');
     }
 
 
-    // funcion para recuperar el personal el cual esta eliminado de manera  logica
     public function recover($id)
     {
         $staff = staff::find($id);
@@ -150,7 +141,6 @@ class staffController extends Controller
         $staff->save();
 
         return redirect()->route('staff.index');
-        // return response()->json(['staff' => $staff]);
     }
 
     public function edit($id)
@@ -162,7 +152,7 @@ class staffController extends Controller
     public function create()
     {
         return view('staff.create');
-        // return response()->json(['staff' => new staff()]);
+
     }
 
     public function editImage($id)
@@ -186,10 +176,11 @@ class staffController extends Controller
             $fileToSave = Str::uuid() . '.' . $extension;
             $staff->image = $image->storeAs('staff', $fileToSave, 'public');
             $staff->save();
-            flash('Personal ' . $staff->name . ' actualizado con éxito')->success()->important();
+            flash('Personal ' . $staff->name . ' successfully updated
+')->success()->important();
             return redirect()->route('staff.index');
         } catch (Exception $e) {
-            flash('error', 'Error al actualizar el personal' . $e->getMessage())->error()->important();
+            flash('error', 'Error updating personnel' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }

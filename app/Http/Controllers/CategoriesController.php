@@ -43,11 +43,7 @@ class CategoriesController extends Controller
 
     public function show($id)
     {
-        if (Cache::has('category' . $id)) {
-            $category = Cache::get('category' . $id);
-        } else {
-            $category = Category::find($id);
-        }
+        $category = $this->getCategory($id);
         Cache::put('category' . $id, $category, 300);
         return view('categories.show')->with('category', $category);
     }
@@ -113,8 +109,9 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         try {
-            $category = Category::find($id);
+            $category = $this->getCategory($id);
             if ($category && $id != 0) {
+                Cache::put('category' . $id, $category, 300);
                 return view('categories.edit')->with('category', $category);
             } else {
                 flash('Invalid route')->error()->important();
@@ -147,7 +144,7 @@ class CategoriesController extends Controller
             'name' => 'min:4|max:120|required|unique:categories,name,' . $id,
         ]);
         try {
-            $category = Category::find($id);
+            $category = $this->getCategory($id);
             $category->name = strtoupper($request->name);
             $category->save();
             Cache::forget('category' . $id);
@@ -175,8 +172,9 @@ class CategoriesController extends Controller
     public function editImage($id)
     {
         try {
-            $category = Category::find($id);
+            $category = $this->getCategory($id);
             if ($category) {
+                Cache::put('category' . $id, $category, 300);
                 return view('categories.image')->with('category', $category);
             } else {
                 flash('Invalid route')->error()->important();
@@ -209,7 +207,7 @@ class CategoriesController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
-            $category = Category::find($id);
+            $category = $this->getCategory($id);
             if ($category->image != Category::$IMAGE_DEFAULT && Storage::exists('public/' . $category->image)) {
                 Storage::delete('public/' . $category->image);
             }
@@ -243,7 +241,7 @@ class CategoriesController extends Controller
     {
         if ($id != 1) {
             try {
-                $category = Category::find($id);
+                $category = $this->getCategory($id);
                 $category->updateProductWithOutCategory($id);
                 $category->delete();
                 Cache::forget('category' . $id);
@@ -270,10 +268,14 @@ class CategoriesController extends Controller
      */
     public function recover($id)
     {
-        $category = Category::find($id);
+        $category = $this->getCategory($id);
         $category->isDelete = false;
         $category->save();
         Cache::forget('category' . $id);
         return redirect()->route('categories.index');
+    }
+
+    private function getCategory($id){
+        return Cache::has('category' . $id) ? Cache::get('category' . $id) : Category::find($id);
     }
 }

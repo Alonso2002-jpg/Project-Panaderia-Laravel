@@ -8,12 +8,27 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    public function userDetails(){
+    /**
+     * Displays the details of the authenticated user.
+     *
+     * @return \Illuminate\View\View The view displaying the user details.
+     */
+
+    public function userDetails()
+    {
         $user = User::find(Auth::id());
         return view('users.detail')->with('user', $user);
     }
 
-    public function updateUser(Request $request){
+    /**
+     * Updates the details of the authenticated user.
+     *
+     * @param \Illuminate\Http\Request $request The request containing the updated user details.
+     * @return \Illuminate\Http\RedirectResponse Redirects back to the user details page with a flash message.
+     */
+
+    public function updateUser(Request $request)
+    {
         $request->validate([
             'name' => 'required|min:3|string|max:255',
             'email' => 'required|email|string|max:255|unique:users,email, ' . Auth::id(),

@@ -19,8 +19,7 @@ class OrderTableSeeder extends Seeder
             'totalItems' => 1,
             'totalPrice' => 2.5,
             'tax' => 0.52,
-            'total' => 3.02,
-            'open' => true
+            'total' => 3.02
            ],
         ]);
     }

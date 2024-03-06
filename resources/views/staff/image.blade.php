@@ -15,7 +15,8 @@
         <h2>Edit Image of Staff</h2>
         <p>ID:{{$staff->id}}</p>
         <p>Name:{{$staff->name}}</p>
-        <p><img  src="{{ asset('storage/' . $staff->image) }}"></p>
+
+        <p><img src="{{ asset('storage/' . $staff->image) }}"></p>
         <form action="{{ route('staff.updateImage', $staff->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')

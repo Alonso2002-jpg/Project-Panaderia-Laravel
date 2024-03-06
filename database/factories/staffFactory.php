@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\staff;
-use Illuminate\Support\Carbon;
 
 class staffFactory
 {
@@ -12,17 +11,12 @@ class staffFactory
     public function definition(): array
     {
         return [
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-            'uuid' => $this->faker->uuid(),
-            'name' => $this->faker->name(),
-            'dni' => $this->faker->word(),
-            'lastname' => $this->faker->lastName(),
-            'startDate' => Carbon::now(),
-            'endDate' => Carbon::now(),
-            'updateDate' => Carbon::now(),
-            'creationDate' => Carbon::now(),
-            'image' => $this->faker->word(),
+            'name' => fake()->name(),
+            'dni' => '03488998J',
+            'email' => 'kevin@gamil.com',
+            'lastname' => fake()->lastName(),
+            'image' => 'https://via.placeholder.com/150',
+            'isDelete' => false,
         ];
     }
 }

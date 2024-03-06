@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Provider;
 use Exception;
 use Illuminate\Http\Request;
@@ -44,11 +45,7 @@ class ProvidersController extends Controller
 
     public function show($id)
     {
-        if (Cache::has('provider' . $id)) {
-            $provider = Cache::get('provider' . $id);
-        } else {
-            $provider = Provider::find($id);
-        }
+        $provider = $this->getProvider($id);
         Cache::put($id, $provider, 300);
         return view('providers.show')->with('provider', $provider);
     }
@@ -119,7 +116,8 @@ class ProvidersController extends Controller
     public function edit($id)
     {
         if ($id != 1) {
-            $provider = Provider::find($id);
+            $provider = $this->getProvider($id);
+            Cache::put('provider' . $id, $provider, 300);
             return view('providers.edit')
                 ->with('provider', $provider);
         } else {
@@ -156,7 +154,7 @@ class ProvidersController extends Controller
         ]);
         if ($id != 1) {
             try {
-                $provider = Provider::find($id);
+                $provider = $this->getProvider($id);
                 $provider->update($request->all());
                 $provider->save();
                 Cache::forget('provider' . $id);
@@ -186,7 +184,8 @@ class ProvidersController extends Controller
 
     public function editImage($id)
     {
-        $provider = Provider::find($id);
+        $provider = $this->getProvider($id);
+        Cache::put('provider' . $id, $provider, 300);
         return view('providers.image')->with('provider', $provider);
     }
 
@@ -215,7 +214,7 @@ class ProvidersController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
-            $provider = Provider::find($id);
+            $provider = $this->getProvider($id);
             if ($provider->image != Provider::$IMAGE_DEFAULT && Storage::exists('public/' . $provider->image)) {
                 Storage::delete('public/' . $provider->image);
             }
@@ -256,7 +255,7 @@ class ProvidersController extends Controller
     {
         if ($id != 1) {
             try {
-                $provider = Provider::find($id);
+                $provider = $this->getProvider($id);
                 Provider::changeProductsProviderToNotProvider($id);
                 if ($provider->image != Provider::$IMAGE_DEFAULT && Storage::exists('public/' . $provider->image)) {
                     Storage::delete('public/' . $provider->image);
@@ -273,5 +272,9 @@ class ProvidersController extends Controller
             flash('This Provider cannot be deleted')->error()->important();
             return redirect()->back();
         }
+    }
+
+    private function getProvider($id){
+        return Cache::has('provider' . $id) ? Cache::get('provider' . $id) : Category::find($id);
     }
 }

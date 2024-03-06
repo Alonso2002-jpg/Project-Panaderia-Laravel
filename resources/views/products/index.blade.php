@@ -38,7 +38,7 @@
                 <form
                     action="{{ route('products.index') }}"
                     class="d-none d-sm-inline-block form-inline ms-4 m-3 mw-100 navbar-search"
-                    id="form-name"
+                    id="filter-form"
                     method="get">
                     @csrf
                     <div class="input-group">
@@ -54,7 +54,7 @@
                     @foreach($categories as $category)
                         @if($category->id != 1)
                             <div class="form-check form-check-inline w-25 mx-4 my-2">
-                                <input class="form-check-input" name="category" type="radio" id="{{ $category->name}}" value="{{ $category->id }}">
+                                <input class="form-check-input" name="category" type="radio" id="{{ $category->name}}" value="{{ $category->id }}" {{ request()->has('category') && request()->get('category') == $category->id ? 'checked' : '' }}>
                                 <label class="form-check-label" for="{{ $category->name}}">{{ ucwords(strtolower($category->name)) }}</label>
                             </div>
                         @endif
@@ -63,11 +63,12 @@
                     @foreach($providers as $provider)
                         @if($provider->id != 1)
                             <div class="form-check form-check-inline w-25 mx-3 my-2">
-                                <input class="form-check-input" name="provider" type="radio" id="{{ $provider->name}}" value="{{ $provider->id }}">
+                                <input class="form-check-input" name="provider" type="radio" id="{{ $provider->name}}" value="{{ $provider->id }}" {{ request()->has('provider') && request()->get('provider') == $provider->id ? 'checked' : '' }}>
                                 <label class="form-check-label" for="{{ $provider->name}}">{{ $provider->name }}</label>
                             </div>
                         @endif
                     @endforeach
+                    <button type="button" class="btn btn-primary col-12 mt-4" onclick="clearFilters()">Clear Filters</button>
                 </form>
             </div>
                 <div class="pagination-container d-flex justify-content-center">
@@ -75,5 +76,4 @@
                 </div>
         </div>
     </section>
-
 @endsection

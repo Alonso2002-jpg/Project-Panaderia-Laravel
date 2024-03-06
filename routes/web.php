@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\staffController;
+use App\Http\Controllers\UsersController;
 use App\Mail\MailableController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $categories = Category::all();
     return view('index')->with('categories', $categories);
-})->name('home');
+})->name('principal');
 
 Route::group(['prefix' => 'cart'], function () {
    Route::get('/', [CartController::class, 'showCart'])->name('cart')->middleware(['auth','admin']);
@@ -85,12 +86,8 @@ Route::group(['prefix' => 'gestion'], function () {
 
 });
 
+Route::post('/sendResetEmail', [UsersController::class, 'passwordForgotten'])->name('password.forgotten');
 
-Route::group(['prefix' => 'email'], function () {
-    Route::get('/register/{email}', [MailableController::class, 'sendRegister'])->name('email.register');
-    Route::get('/invoice/{email}', [MailableController::class, 'sendInVoice'])->name('email.invoice');
-    Route::get('/forgot/{email}', [MailableController::class, 'sendForgotPass'])->name('email.forgot');
-});
 Route::get('/about', function () { return view('about'); })->name('about');
 Auth::routes();
 

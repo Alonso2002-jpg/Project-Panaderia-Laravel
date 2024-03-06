@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Migas de Oro - Register')
+
 @section('content')
     <!-- Section: Design Block -->
     <section class="background-radial-gradient overflow-hidden">
@@ -52,41 +54,59 @@
 
                     <div class="card bg-glass">
                         <div class="card-body px-4 py-5 px-md-5">
-                            <form>
+                            <form method="post" action="{{ route('register') }}">
+                                @csrf
                                 <div class="py-2 text-center fs-2">Sign Up</div>
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <input type="text" id="form3Example1" class="form-control" placeholder="John Doe"/>
-                                            <label class="form-label" for="form3Example1">Name</label>
+                                            <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="John Doe" name="name"/>
+                                            <label class="form-label" for="name">Full Name</label>
+                                            @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <input type="text" id="form3Example2" class="form-control" placeholder="+34" maxlength="9"/>
-                                            <label class="form-label" for="form3Example2">Phone Number</label>
+                                            <input type="text" id="phone_number" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" placeholder="+34" maxlength="9"/>
+                                            <label class="form-label" for="phone_number">Phone Number</label>
+                                            @error('phone_number')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
-                                    <input type="email" id="form3Example3" class="form-control" placeholder="example@example.com"/>
-                                    <label class="form-label" for="form3Example3">Email address</label>
+                                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="example@example.com"/>
+                                    <label class="form-label" for="email">Email address</label>
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
-
                                 <!-- Password input -->
                                 <div class="row">
                                     <div class="form-outline mb-4 col-md-6">
-                                        <input type="password" id="form3Example4" class="form-control" />
-                                        <label class="form-label" for="form3Example4">Password</label>
+                                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" />
+                                        <label class="form-label" for="password">Password</label>
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                     <div class="form-outline mb-4 col-md-6">
-                                        <input type="password" id="form3Example4" class="form-control" />
-                                        <label class="form-label" for="form3Example4">Confirm Password</label>
+                                        <input type="password" id="password-confirm" name="password_confirmation" class="form-control @error('password-confirm') is-invalid @enderror" />
+                                        <label class="form-label" for="password-confirm">Confirm Password</label>
                                     </div>
                                 </div>
-
                                 <!-- Submit button -->
                                 <button type="submit" class="btn btn-dark btn-block mb-4 w-100">
                                     Sign up

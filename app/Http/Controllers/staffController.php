@@ -6,6 +6,7 @@ use App\Models\staff;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -59,9 +60,9 @@ class staffController extends Controller
 
     public function show($id)
     {
-        $staff = staff::find($id);
+        $staff = $this->getStaff($id);
+        Cache::put('staff' . $id, $staff, 300);
         return view('staff.show')->with('staff', $staff);
-
     }
 
     /**
@@ -83,7 +84,7 @@ class staffController extends Controller
     public function destroy($id)
     {
         try {
-            $staff = staff::find($id);
+            $staff = $this->getStaff($id);
 
             if (!$staff) {
                 Session::flash('error', 'Personal no encontrado.');
@@ -98,6 +99,7 @@ class staffController extends Controller
             $staff->isDelete = true;
             $staff->endDate = Carbon::now();
             $staff->save();
+            Cache::forget('provider' . $id);
             Session::flash('success', 'Personnel successfully eliminated.');
 
         } catch (\Exception $e) {
@@ -131,7 +133,7 @@ class staffController extends Controller
 
     public function update(Request $request, $id)
     {
-        $staff = staff::find($id);
+        $staff = $this->getStaff($id);
         if (!$staff) {
             return redirect()->back();
 
@@ -155,6 +157,7 @@ class staffController extends Controller
             }
 
             $staff->update($validatedData);
+            Cache::forget('provider' . $id);
             return redirect()->route('staff.index');
 
         } catch (Exception $e) {
@@ -228,9 +231,10 @@ class staffController extends Controller
 
     public function recover($id)
     {
-        $staff = staff::find($id);
+        $staff = $this->getStaff($id);
         $staff->isDelete = false;
         $staff->save();
+        Cache::forget('provider' . $id);
 
         return redirect()->route('staff.index');
     }
@@ -247,7 +251,8 @@ class staffController extends Controller
 
     public function edit($id)
     {
-        $staff = staff::findOrFail($id);
+        $staff = $this->getStaff($id);
+        Cache::put('staff' . $id, $staff, 300);
         return view('staff.edit')->with('staff', $staff);
     }
 
@@ -274,7 +279,8 @@ class staffController extends Controller
 
     public function editImage($id)
     {
-        $staff = staff::find($id);
+        $staff = $this->getStaff($id);
+        Cache::put('staff' . $id, $staff, 300);
         return view('staff.image')->with('staff', $staff);
     }
 
@@ -292,7 +298,7 @@ class staffController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
-            $staff = staff::find($id);
+            $staff = $this->getStaff($id);
             if ($staff->image != staff::$IMAGE_DEFAULT && Storage::exists('public/' . $staff->image)) {
                 Storage::delete('public/' . $staff->image);
             }
@@ -301,6 +307,7 @@ class staffController extends Controller
             $fileToSave = Str::uuid() . '.' . $extension;
             $staff->image = $image->storeAs('staff', $fileToSave, 'public');
             $staff->save();
+            Cache::forget('staff' . $id);
             flash('Personal ' . $staff->name . ' successfully updated
 ')->success()->important();
             return redirect()->route('staff.index');
@@ -308,5 +315,9 @@ class staffController extends Controller
             flash('error', 'Error updating personnel' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
+    }
+
+    public function getStaff($id){
+        return Cache::has('staff' . $id) ? Cache::get('staff' . $id) : staff::find($id);
     }
 }

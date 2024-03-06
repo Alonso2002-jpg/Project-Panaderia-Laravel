@@ -23,12 +23,11 @@
 {{-- Esto es el contenido --}}
 @yield('content')
 
+{{--Esto es el footer --}}
+@include('footer')
 <div class="mx-2 my-2">
     @include('flash::message')
 </div>
-{{--Esto es el footer --}}
-@include('footer')
-
 {{--Esto es el script Principal --}}
 <script src="{{ asset('js/scripts.js') }}"></script>
 {{-- Scripts --}}

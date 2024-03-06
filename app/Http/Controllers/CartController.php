@@ -33,7 +33,7 @@ class CartController extends Controller
             ];
         }
 
-        return view('cart')->with('cartItems', $cartItems);
+        return view('cart.cart')->with('cartItems', $cartItems);
     }
     /**
      * Updates the quantity of a specific product in the shopping cart.

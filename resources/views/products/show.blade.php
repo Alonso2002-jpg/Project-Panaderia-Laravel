@@ -23,14 +23,23 @@
                         <span>${{ $product->price }}</span>
                     </div>
                     <p class="lead">{{ $product->description }}</p>
-                    <div class="d-flex">
-                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="0"
-                               style="max-width: 3rem"/>
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                            <i class="bi-cart-fill me-1"></i>
-                            Add to cart
-                        </button>
-                    </div>
+                    <form method="post" action="{{ route('addToCart', $product->id) }}" id="formCart">
+                        @csrf
+                        <div class="d-flex">
+                            <button class="btn btn-outline-dark" type="button" onclick="decrementQuantity()">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="hidden" id="stock" name="stock" value="0">
+                            <input class="form-control text-center mx-2" id="temporalStock" name="temporalStock" type="text" value="0" style="max-width: 3rem" disabled>
+                            <button class="btn btn-outline-dark me-3" type="button" onclick="incrementQuantity()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                <i class="bi-cart-fill me-1"></i>
+                                Add to cart
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -63,4 +72,26 @@
             </div>
         </div>
     </section>
+    <script>
+        document.getElementById('formCart').addEventListener('submit', function(event) {
+            var inputQuantity = document.getElementById('temporalStock');
+            var hiddenInputQuantity = document.getElementById('stock');
+            hiddenInputQuantity.value = inputQuantity.value;
+        });
+        function incrementQuantity() {
+            var inputQuantity = document.getElementById('temporalStock');
+            var currentValue = parseInt(inputQuantity.value);
+            if (currentValue < {{ $product->stock }}) {
+                inputQuantity.value = currentValue + 1;
+            }
+        }
+
+        function decrementQuantity() {
+            var inputQuantity = document.getElementById('temporalStock');
+            var newValue = parseInt(inputQuantity.value) - 1;
+            if (newValue >= 0) {
+                inputQuantity.value = newValue;
+            }
+        }
+    </script>
 @endsection

@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\staff;
-use Illuminate\Support\Carbon;
 
 class staffFactory
 {
@@ -15,7 +14,7 @@ class staffFactory
             'name' => fake()->name(),
             'dni' => '03488998J',
             'email' => 'kevin@gamil.com',
-            'lastname' => 'Doe',
+            'lastname' => fake()->lastName(),
             'image' => 'https://via.placeholder.com/150',
             'isDelete' => false,
         ];

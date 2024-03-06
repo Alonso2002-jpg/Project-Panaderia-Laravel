@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Product;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -42,6 +44,8 @@ class OrdersController extends Controller
             'postCode' => 'regex:/^\d{5}$/|required',
             'additionalInfo' => 'sometimes|max:150'
         ]);
+        $orderLines = [];
+        $adress = new Address($request->all());
         $cart = Session::get('cart');
         $order = new Order();
         $order->user_id = Auth::id();
@@ -73,6 +77,13 @@ class OrdersController extends Controller
         return redirect()->back();
     }
 
+    public function generateInvoice($order, $orderLines, $address)
+    {
+        $user = User::find(Auth::id());
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('pdf.invoice', ['user' => $user, 'order' => $order, 'address' => $address, 'orderLines' => $orderLines]);
+        return $pdf->download(Carbon::now() . $order->id . '.pdf');
+    }
     /**
      * Retrieves all orders and displays them.
      *

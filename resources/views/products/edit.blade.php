@@ -12,7 +12,7 @@
         </div>
     </header>
     <div class="container">
-        <h2>Edit Category</h2>
+        <h2>Edit Product</h2>
         <form action="{{ route('products.update', $product->id) }}" method="POST">
             @csrf
             @method('PUT')

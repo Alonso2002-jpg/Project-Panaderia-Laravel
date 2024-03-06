@@ -24,16 +24,17 @@ class CartController extends Controller
     {
         $cart = Session::get('cart', []);
         $cartItems = [];
-
+        $totalPrice = 0;
         foreach ($cart as $item) {
             $product = $this->getProduct($item['product_id']);
+            $totalPrice += $product->price * $item['stock'];
             $cartItems[] = [
                 'product' => $product,
                 'quantity' => $item['stock'],
             ];
         }
 
-        return view('cart.cart')->with('cartItems', $cartItems);
+        return view('cart')->with('cartItems', $cartItems)->with('totalPrice', $totalPrice);
     }
     /**
      * Updates the quantity of a specific product in the shopping cart.

@@ -1,2 +1,0 @@
-<header class="normalhead">
-</header>

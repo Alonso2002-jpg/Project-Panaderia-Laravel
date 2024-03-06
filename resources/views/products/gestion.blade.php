@@ -3,7 +3,7 @@
 @section('title', 'Miga de Oro -Gestion Products')
 
 @section('content')
-    @include('products.producthead')
+    @include('normalhead')
     <section>
         <div class="container">
             <h2>Our Products</h2>

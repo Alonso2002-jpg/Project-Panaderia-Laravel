@@ -5,12 +5,7 @@
 @section('title', 'Miga de Oro - Gestion de Productos')
 
 @section('content')
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Know about our Products!</div>
-            <div class="masthead-heading text-uppercase">Yum Yummy!</div>
-        </div>
-    </header>
+    @include('normalhead')
     <div class="container">
         <h2>Edit Product</h2>
         <form action="{{ route('products.update', $product->id) }}" method="POST">

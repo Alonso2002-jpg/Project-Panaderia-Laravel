@@ -32,8 +32,12 @@
 {{--Esto es el script Principal --}}
 <script src="{{ asset('js/scripts.js') }}"></script>
 {{-- Scripts --}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- CSS de Bootstrap -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<!-- JavaScript de Bootstrap (requiere jQuery) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+z8vwY+P1SMwP1v6C9EM3WQwW1p1fj5quwE2FTh" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js" integrity="sha384-X+2yoUjPs/hfDjOabuUz+TcAaRu2o8j0VaS5kI9xSSo6O5B9q0B+xb2EVhFVh/Kx" crossorigin="anonymous"></script>
+
 </body>
 </html>

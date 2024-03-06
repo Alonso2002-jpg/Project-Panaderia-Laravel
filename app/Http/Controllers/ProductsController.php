@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Provider;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -47,8 +48,13 @@ class ProductsController extends Controller
     }
 
     public function show($id){
-       $product = Product::find($id);
+        if(Cache::has($id)){
+            $product = Cache::get($id);
+        } else {
+            $product = Product::find($id);
+        }
        $relatedProducts = Product::where('category_id', '=', $product->category_id)->where('id', "<>", $id)->get();
+       Cache::put($id, $product, 300);
        return view('products.show')->with('product', $product)->with('relatedProducts', $relatedProducts);
     }
 
@@ -117,7 +123,6 @@ class ProductsController extends Controller
             $product->provider_id = $request->provider ?? 1;
             $product->save();
             $cart = Session::get('cart', []);
-
             $totalItems = Session::get('totalItems', 0);
             $totalToRemove = 0;
 
@@ -129,6 +134,7 @@ class ProductsController extends Controller
             }
             Session::put('cart', array_values($cart));
             Session::put('totalItems', max(0, $totalItems - $totalToRemove));
+            Cache::forget($product->id);
             flash('Product ' . $product->name . ' updated successfully.')->warning()->important();
             return redirect()->route('products.index');
         } catch (Exception $e) {
@@ -157,6 +163,7 @@ class ProductsController extends Controller
             $fileToSave = $product->id . '.' . $extension;
             $product->image = $image->storeAs('products', $fileToSave, 'public');
             $product->save();
+            Cache::forget($product->id);
             flash('Product ' . $product->name . ' updated successfully.')->warning()->important();
             return redirect()->route('products.index');
         } catch (Exception $e){
@@ -187,6 +194,7 @@ class ProductsController extends Controller
             }
             Session::put('cart', array_values($cart));
             Session::put('totalItems', max(0, $totalItems - $totalToRemove));
+            Cache::forget($product->id);
             flash('Product ' . $product->name . ' deleted successfully.')->error()->important();
             return redirect()->route('products.index');
         } catch (Exception $e) {

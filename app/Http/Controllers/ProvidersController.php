@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Provider;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -18,7 +19,12 @@ class ProvidersController extends Controller
 
     public function show($id)
     {
-        $provider = Provider::find($id);
+        if(Cache::has('provider' . $id)){
+            $provider = Cache::get('provider' . $id);
+        } else {
+            $provider = Provider::find($id);
+        }
+        Cache::put($id, $provider, 300);
         return view('providers.show')->with('provider', $provider);
     }
 
@@ -70,6 +76,7 @@ class ProvidersController extends Controller
                 $provider = Provider::find($id);
                 $provider->update($request->all());
                 $provider->save();
+                Cache::forget('provider' . $id);
                 flash('Provider ' . $provider->name . ' updated successfully.')->success()->important();
                 return redirect()->route('providers.index');
             } catch (Exception $e) {
@@ -105,6 +112,7 @@ class ProvidersController extends Controller
             $fileToSave = Str::uuid() . '.' . $extension;
             $provider->image = $image->storeAs('providers', $fileToSave, 'public');
             $provider->save();
+            Cache::forget('provider' . $id);
             flash('Provider ' . $provider->name . ' updated successfully.')->warning()->important();
             return redirect()->route('providers.index');
         } catch (Exception $e) {
@@ -124,6 +132,7 @@ class ProvidersController extends Controller
                     Storage::delete('public/' . $provider->image);
                 }
                 $provider->delete();
+                Cache::forget('provider' . $id);
                 flash('Provider ' . $provider->name . ' deleted successfully.')->error()->important();
                 return redirect()->route('providers.index');
             } catch (Exception $e) {

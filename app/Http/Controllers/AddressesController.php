@@ -21,11 +21,7 @@ class AddressesController extends Controller
      */
     public function getAddresses()
     {
-        if (Cache::has('addresses')) {
-            $addresses = Cache::get('addresses');
-        } else {
-            $addresses = Address::all();
-        }
+        $addresses = Cache::has('addresses') ? Cache::get('addresses') : Address::all();
         Cache::put('addresses', $addresses, 300);
         return view('addresses.index')->with('addresses', $addresses);
     }
@@ -61,11 +57,7 @@ class AddressesController extends Controller
      */
     public function getAddressById($id)
     {
-        if (Cache::has('address' . $id)) {
-            $address = Cache::get('address' . $id);
-        } else {
-            $address = Address::find($id);
-        }
+        $address = Cache::has('address' . $id) ? Cache::get('address' . $id) : Address::find($id);
         Cache::put('address' . $id, $address, 300);
         return view('address.show')->with('address', $address);
     }
@@ -165,7 +157,8 @@ class AddressesController extends Controller
 
     public function editAddress($id)
     {
-        $address = Address::find($id)->first();
+        $address = Cache::has('address' . $id) ? Cache::get('address' . $id) : Address::find($id);
+        Cache::put('address' . $id, $address, 300);
         return view('addresses.edit')->with('address', $address);
     }
 
@@ -225,7 +218,7 @@ class AddressesController extends Controller
     public function destroyAddress($id)
     {
         try {
-            $address = Address::find($id);
+            $address = Cache::has('address' . $id) ? Cache::get('address' . $id) : Address::find($id);
             $address->delete();
             Cache::forget('address' . $id);
             Cache::forget('addresses');

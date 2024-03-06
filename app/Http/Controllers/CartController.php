@@ -102,6 +102,7 @@ class CartController extends Controller
                     break;
                 }
             }
+            $cart = array_values($cart);
             Session::put('cart', $cart);
             Session::put('totalItems', $totalItems);
             return redirect()->back();

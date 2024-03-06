@@ -22,7 +22,7 @@ class CartController extends Controller
     public function showCart()
     {
         $cart = Session::get('cart', []);
-        return view('cart')->with('cart', $cart);
+        return view('cart.cart')->with('cart', $cart);
     }
 
     /**

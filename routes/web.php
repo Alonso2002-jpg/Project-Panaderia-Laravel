@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $categories = Category::all();
     return view('index')->with('categories', $categories);
-})->name('home');
+})->name('principal');
 
 Route::group(['prefix' => 'cart'], function () {
    Route::get('/', [CartController::class, 'showCart'])->name('cart')->middleware(['auth','admin']);

@@ -37,7 +37,7 @@
         </style>
         <div class="container px-4 py-4 px-md-4 text-center text-lg-start my-5" style="height: 87vh;">
             <div class="row gx-lg-5 align-items-center my-5 py-5">
-                <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <div class="col-lg-12 mb-5 mb-lg-0 position-relative">
                     <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
                     <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
 
@@ -60,16 +60,6 @@
                             </form>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 mb-5 mb-lg-0 text-center" style="z-index: 10">
-                    <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-                        Reset Password<br />
-                        <span style="color: hsl(51,48%,32%)">Enter your email</span>
-                    </h1>
-                    <p class="mb-4 opacity-70 fs-5" style="color: hsl(0,0%,0%)">
-                        Enter your email and we will send you a link to reset your password
-                    </p>
-
                 </div>
             </div>
         </div>

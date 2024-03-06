@@ -9,6 +9,7 @@ use App\Mail\MailableController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\GeneradorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +85,8 @@ Route::group(['prefix' => 'gestion'], function () {
     Route::get('/categories', [CategoriesController::class, 'categories'])->name('gestion.categories')->middleware(['auth', 'admin']);
 
 });
+
+Route::name('print')->get('/imprimir', [GeneradorController::class, 'imprimir']);
 
 Route::group(['prefix' => 'email'], function () {
     Route::get('/register/{email}', [MailableController::class, 'sendRegister'])->name('email.register');

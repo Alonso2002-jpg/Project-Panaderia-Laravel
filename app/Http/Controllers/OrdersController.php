@@ -73,6 +73,13 @@ class OrdersController extends Controller
         return redirect()->back();
     }
 
+    public function generateInvoice($order)
+    {
+        $user = User::find(Auth::id());
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('pdf.invoice', ['user' => $user, 'order' => $order]);
+        return $pdf->download($order->created_at->format('Y-m-d') . $order->id . '.pdf');
+    }
     /**
      * Retrieves all orders and displays them.
      *

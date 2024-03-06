@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\GeneradorController;
+use \App\Http\Controllers\OrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,7 +87,7 @@ Route::group(['prefix' => 'gestion'], function () {
 
 });
 
-Route::name('print')->get('/imprimir', [GeneradorController::class, 'imprimir']);
+Route::name('print')->get('/imprimir', [OrdersController::class, 'generateInvoice']);
 
 Route::group(['prefix' => 'email'], function () {
     Route::get('/register/{email}', [MailableController::class, 'sendRegister'])->name('email.register');

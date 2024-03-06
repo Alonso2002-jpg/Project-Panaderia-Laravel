@@ -21,7 +21,7 @@ class OrderLineTableSeeder extends Seeder
                     'product_id' => 'f1c3f5a4-bebd-4619-b136-ba2bcfbd5c9a',
                     'stock' => 1,
                     'unitPrice' => 2.5,
-                    'totalPrice' => 2.5
+                    'linePrice' => 2.5
                 ]
             ]
         );

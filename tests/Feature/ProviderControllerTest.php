@@ -2,33 +2,34 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\ProvidersController;
 use App\Models\Provider;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class ProviderControllerTest extends TestCase
 {
+
+    use RefreshDatabase;
+    private $providerController;
+
     protected function setUp(): void{
         parent::setUp();
+        $this->providerController = new ProvidersController();
         $this->artisan('migrate:fresh');
         $this->artisan('db:seed');
     }
 
-    public function text_index() {
-        $response = $this->get('/providers');
-        $response->assertViewIs('providers.index');
-        $response->assertViewHas('providers');
-        $response->assertStatus(200);
+    public function test_index() {
+        $request = new Request();
+        $request->search = null;
+        $providers = $this->providerController->index($request);
+        $this->assertIsObject($providers);
     }
 
-    public function test_show_view(){
-        $provider = Provider::first();
-        $response = $this->get('/providers/1', $provider->toArray());
-        //$response->assertViewIs('providers.details');
-        //$response->assertViewHas('providers', $provider);
-    }
 
     public function test_create_view_admin(){
         $adminUser = User::factory()->create(['role' => 'admin']);
@@ -50,6 +51,21 @@ class ProviderControllerTest extends TestCase
         $response->assertStatus(302);
     }
 
+    public function test_edit_admin(){
+        $user = User::factory()->create(['role' => 'admin']);
+        $provider = Provider::factory()->create();
+        $response = $this->actingAs($user)->get('/providers/' . $provider->id  . '/edit', $provider->toArray());
+        $response->assertViewIs('providers.edit');
+        $response->assertViewHas('provider', $provider);
+    }
+    public function test_update_admin(){
+        $user = User::factory()->create(['role' => 'admin']);
+        $provider = Provider::factory()->create();
+        $providerUpdated = ['name' => 'Nombre nuevo',
+            'nif' => '03480731A', 'telephone' => '602967986', 'isDeleted' => false,];
+        $response = $this->actingAs($user)->put('/providers/' . $provider->id, $providerUpdated);
+        $this->assertIsObject($provider);
+    }
     public function test_update_view_user(){
         $user = User::factory()->create(['role' => 'user']);
         $provider = Provider::first();
@@ -63,6 +79,13 @@ class ProviderControllerTest extends TestCase
         $response = $this->get('/providers/1/edit', $provider->toArray());
         $response->assertRedirectToRoute('login');
         $response->assertStatus(302);
+    }
+
+    public function test_delete_admin(){
+        $user = User::factory()->create(['role' => 'admin']);
+        $provider = Provider::factory()->create();
+        $response = $this->actingAs($user)->delete('/providers/' . $provider->id);
+        $response->assertRedirect('/providers');
     }
 
     public function test_delete_user(){

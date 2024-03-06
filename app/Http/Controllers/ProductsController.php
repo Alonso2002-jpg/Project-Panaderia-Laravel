@@ -60,7 +60,7 @@ class ProductsController extends Controller
     public function addToCart(Request $request, $id)
     {
         try {
-            $product = Product::find($id);
+            $product = $this->getProduct($id);
             $request->validate([
                 'stock' => 'required|gt:0|lte:' . $product->stock,
             ]);
@@ -74,6 +74,7 @@ class ProductsController extends Controller
             $cart[] = $newItem;
             Session::put('cart', $cart);
             Session::put('totalItems', $totalItems);
+            Cache::put($id, $product, 300);
             flash($request->stock . ' ' . $product->name . ' added to cart.')->success()->important();
             return redirect()->back();
         } catch (Exception $e) {
@@ -97,11 +98,7 @@ class ProductsController extends Controller
 
     public function show($id)
     {
-        if (Cache::has($id)) {
-            $product = Cache::get($id);
-        } else {
-            $product = Product::find($id);
-        }
+        $product = $this->getProduct($id);
         $relatedProducts = Product::where('category_id', '=', $product->category_id)->where('id', "<>", $id)->get();
         Cache::put($id, $product, 300);
         return view('products.show')->with('product', $product)->with('relatedProducts', $relatedProducts);
@@ -203,9 +200,10 @@ class ProductsController extends Controller
 
     public function edit($id)
     {
-        $product = Product::find($id);
+        $product = $this->getProduct($id);
         $categories = Category::where('id', '<>', 1)->get();
         $providers = Provider::where('id', '<>', 1)->get();
+        Cache::put($id, $product, 300);
         return view('products.edit')
             ->with('product', $product)
             ->with('category', $categories)
@@ -241,7 +239,7 @@ class ProductsController extends Controller
             'provider' => 'sometimes|exists:provider,id',
         ]);
         try {
-            $product = Product::find($id);
+            $product = $this->getProduct($id);
             $product->update($request->all());
             $product->description = $product->description ?? " ";
             $product->category_id = $request->category ?? 1;
@@ -281,7 +279,8 @@ class ProductsController extends Controller
 
     public function editImage($id)
     {
-        $product = Product::find($id);
+        $product = $this->getProduct($id);
+        Cache::put($id, $product, 300);
         return view('products.image')->with('product', $product);
     }
 
@@ -308,7 +307,7 @@ class ProductsController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
-            $product = Product::find($id);
+            $product = $this->getProduct($id);
             if ($product->image != Product::$IMAGE_DEFAULT && Storage::exists('public/' . $product->image)) {
                 Storage::delete('public/' . $product->image);
             }
@@ -344,7 +343,7 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         try {
-            $product = Product::find($id);
+            $product = $this->getProduct($id);
             if ($product->image != Product::$IMAGE_DEFAULT && Storage::exists('public/' . $product->image)) {
                 Storage::delete('public/' . $product->image);
             }
@@ -369,5 +368,9 @@ class ProductsController extends Controller
             flash('Error deleting the product' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
+    }
+
+    private function getProduct($id){
+        return Cache::has($id) ?  Cache::get($id) : Product::find($id);
     }
 }

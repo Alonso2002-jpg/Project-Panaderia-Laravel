@@ -278,14 +278,6 @@ class staffController extends Controller
         return view('staff.image')->with('staff', $staff);
     }
 
-    /**
-     * Updates the image of a staff member.
-     *
-     * @param \Illuminate\Http\Request $request The HTTP request.
-     * @param int $id The ID of the staff member.
-     * @return \Illuminate\Http\RedirectResponse The redirect response.
-     */
-
     public function updateImage(Request $request, $id)
     {
         $request->validate([

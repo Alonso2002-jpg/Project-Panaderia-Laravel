@@ -15,8 +15,7 @@ class Order extends Model
         'totalItems',
         'totalPrice',
         'tax',
-        'total',
-        'open'
+        'total'
     ];
 
     public function user()

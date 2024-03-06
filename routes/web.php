@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
@@ -25,11 +26,18 @@ Route::get('/', function () {
     return view('index')->with('categories', $categories);
 })->name('home');
 
+Route::group(['prefix' => 'cart'], function () {
+   Route::get('/', [CartController::class, 'showCart'])->name('cart')->middleware(['auth','admin']);
+   Route::put('/', [CartController::class, 'updateCartLine'])->name('cart.update')->middleware(['auth','admin']);
+   Route::delete('/', [CartController::class, 'destroyCartLine'])->name('cart.destroy')->middleware(['auth','admin']);
+});
+
 Route::group(['prefix' => 'products'], function () {
     Route::get('/', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/create', [ProductsController::class, 'create'])->name('products.create')->middleware(['auth', 'admin']);
     Route::post('/', [ProductsController::class, 'store'])->name('products.store')->middleware(['auth','admin']);
     Route::get('/{product}', [ProductsController::class, 'show'])->name('products.show');
+    Route::post('/{product}', [ProductsController::class, 'addToCart'])->name('addToCart')->middleware(['auth']);
     Route::get('/{product}/edit', [ProductsController::class, 'edit'])->name('products.edit')->middleware(['auth','admin']);
     Route::put('/{product}', [ProductsController::class, 'update'])->name('products.update')->middleware(['auth','admin']);
     Route::delete('/{product}', [ProductsController::class, 'destroy'])->name('products.destroy')->middleware(['auth','admin']);
@@ -67,7 +75,14 @@ Route::group(['prefix' => 'staff'], function () {
     Route::delete('/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy')->middleware(['auth', 'admin']);
     Route::get('/{staff}/edit-image', [StaffController::class, 'editImage'])->name('staff.editImage')->middleware(['auth', 'admin']);
     Route::patch('/{staff}/update-image', [StaffController::class, 'updateImage'])->name('staff.updateImage')->middleware(['auth', 'admin']);
-    Route::put('/{staff}/recover', [StaffController::class, 'recover'])->name('staff.recover')->middleware(['auth', 'admin']);
+    Route::post('/{staff}/recover', [StaffController::class, 'recover'])->name('staff.recover')->middleware(['auth', 'admin']);
+});
+Route::group(['prefix' => 'gestion'], function () {
+    Route::get('/products', [ProductsController::class, 'products'])->name('gestion.products')->middleware(['auth', 'admin']);
+    Route::get('/providers', [ProvidersController::class, 'index'])->name('gestion.providers')->middleware(['auth', 'admin']);
+    Route::get('/staff', [staffController::class, 'staff'])->name('gestion.staff')->middleware(['auth', 'admin']);
+    Route::get('/categories', [CategoriesController::class, 'categories'])->name('gestion.categories')->middleware(['auth', 'admin']);
+
 });
 
 Route::group(['prefix' => 'email'], function () {

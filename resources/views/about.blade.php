@@ -5,7 +5,7 @@
 @section('content')
     <header class="masthead">
         <div class="container">
-            <div class="masthead-subheading">Know about about us!</div>
+            <div class="masthead-subheading">Know about us!</div>
             <div class="masthead-heading text-uppercase">Hello!</div>
         </div>
     </header>

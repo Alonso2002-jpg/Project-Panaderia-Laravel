@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('totalItems')->default(0);
             $table->decimal('totalPrice', 10, 2)->default(0.0);
             $table->decimal('tax', 10, 2)->default(0.0);
             $table->decimal('total', 10, 2)->default(0.0);
-            $table->boolean('open')->default(true);
             $table->timestamps();
         });
     }

@@ -6,12 +6,18 @@ use App\Models\Address;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AddressesController extends Controller
 {
     public function getAddresses()
     {
-        $addresses = Address::all();
+        if(Cache::has('addresses')){
+            $addresses = Cache::get('addresses');
+        } else {
+            $addresses = Address::all();
+        }
+        Cache::put('addresses', $addresses, 300);
         return view('addresses.index')->with('addresses', $addresses);
     }
 
@@ -23,7 +29,12 @@ class AddressesController extends Controller
 
     public function getAddressById($id)
     {
-        $address = Address::find($id);
+        if(Cache::has('address' . $id)){
+            $address = Cache::get('address' . $id);
+        } else {
+            $address = Address::find($id);
+        }
+        Cache::put('address' . $id, $address, 300);
         return view('address.show')->with('address', $address);
     }
 
@@ -59,6 +70,7 @@ class AddressesController extends Controller
             $address = new Address($request->all());
             $address->user_id = Auth::id();
             $address->save();
+            Cache::forget('addresses');
             flash('New address created successfully.')->success()->important();
             return redirect()->route('addresses.index');
         } catch (Exception $e) {
@@ -98,6 +110,8 @@ class AddressesController extends Controller
         try {
             $address = Address::find($id)->where('user_id', Auth::id())->first();
             $address->update($request->all());
+            Cache::forget('address' . $id);
+            Cache::forget('addresses');
             flash('Address updated successfully.')->warning()->important();
             return redirect()->route('addresses.index');
         } catch (Exception $e) {
@@ -111,6 +125,8 @@ class AddressesController extends Controller
         try {
             $address = Address::find($id);
             $address->delete();
+            Cache::forget('address' . $id);
+            Cache::forget('addresses');
             flash('Address ' . $address->id . ' deleted successfully.')->error()->important();
             return redirect()->route('addresses.index');
         } catch (Exception $e) {
@@ -126,6 +142,8 @@ class AddressesController extends Controller
                 ->where('user_id', Auth::id())
                 ->first();
             $address->delete();
+            Cache::forget('address' . $id);
+            Cache::forget('addresses');
             flash('Address ' . $address->id . ' deleted successfully.')->error()->important();
             return redirect()->route('addresses.index');
         } catch (Exception $e) {

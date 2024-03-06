@@ -17,9 +17,8 @@
                         @foreach($categories as $category)
                             @if($category->id != 1)
                                 <div class="col-lg-3 col-sm-3 mb-4 category">
-                                    <!-- Portfolio item 1-->
                                     <div class="portfolio-item">
-                                        <a class="portfolio-link" data-bs-toggle="modal" href="*">
+                                        <a class="portfolio-link" href="{{ route('products.index', ['category' => $category->id]) }}">
                                             <div class="portfolio-hover">
                                                 <div class="portfolio-hover-content"><i class="fas fa-bread-slice fa-3x"></i></div>
                                             </div>

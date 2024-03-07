@@ -42,16 +42,6 @@ class UsersController extends Controller
         return redirect()->route('users.detail');
     }
 
-    public function passwordForgotten(Request $request){
-        $request->validate([
-            'email' => 'required|email'
-        ]);
-        $user = User::where('email', $request->email);
-        if($user){
-            $mailableController = new MailableController();
-            $mailableController->sendForgotPass($user->email);
-        }
-        return redirect()->back();
-    }
+
 
 }

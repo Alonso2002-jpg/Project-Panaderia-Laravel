@@ -16,7 +16,7 @@ class ProductsControllerTest extends TestCase{
     $this->artisan('db:seed');
     }
 
-    public function text_index() {
+    public function test_index() {
         $response = $this->get('/products');
         $response->assertViewIs('products.index');
         $response->assertViewHas('products');
@@ -31,6 +31,12 @@ class ProductsControllerTest extends TestCase{
         $response->assertViewHas('product', $product);
     }
 
+    public function test_create_view_admin(){
+        $user = User::factory()->create(['role' => 'admin']);
+        $response = $this->actingAs($user)->get('/products/create');
+        $response->assertViewIs('products.create');
+        $response->assertStatus(200);
+    }
 
     public function test_create_view_user(){
         $user = User::factory()->create(['role' => 'user']);

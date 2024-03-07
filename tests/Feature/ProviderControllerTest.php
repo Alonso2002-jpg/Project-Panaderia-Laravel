@@ -59,6 +59,8 @@ class ProviderControllerTest extends TestCase
         $response = $this->actingAs($user)->put('/providers/' . $provider->id, $providerUpdated);
         $this->assertIsObject($provider);
     }
+
+
     public function test_update_view_user(){
         $user = User::factory()->create(['role' => 'user']);
         $provider = Provider::first();

@@ -6,9 +6,7 @@ use App\Http\Controllers\ProvidersController;
 use App\Models\Provider;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class ProviderControllerTest extends TestCase

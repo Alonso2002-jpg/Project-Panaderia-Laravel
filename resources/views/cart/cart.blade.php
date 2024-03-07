@@ -92,7 +92,7 @@
                     </div>
                     <div class="row mt-4 d-flex align-items-center">
                         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-                            <a href="catalog.html" style="color: #cca000;">
+                            <a href="{{ route('products.index') }}" style="color: #cca000;">
                                 <i class="fas fa-arrow-left mr-2"></i> Go To Shopping</a>
                         </div>
                     </div>

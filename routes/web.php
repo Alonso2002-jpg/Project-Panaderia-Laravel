@@ -88,6 +88,7 @@ Route::group(['prefix' => 'gestion'], function () {
 
 });
 
+Route::get('/payment', function (){return view('layouts.payment');})->name('payment')->middleware(['auth']);
 
 Route::name('print')->get('/imprimir', [OrdersController::class, 'generateInvoice']);
 Route::get('/about', function () { return view('about'); })->name('about');

@@ -47,7 +47,7 @@
                                <div class="card-body col-6">
                                    <span class="font-weight-normal card-text">DNI/NIE</span>
                                    <div class="input">
-                                       <input type="text" class="form-control" required name="dni" placeholder="Y1234567W" value="{{$address->dni ?? "" }}">
+                                       <input type="text" class="form-control" required name="dni" value="{{$address->dni ?? "" }}">
 
                                    </div>
                                </div>

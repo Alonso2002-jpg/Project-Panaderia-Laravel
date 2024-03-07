@@ -34,7 +34,7 @@
                                             <div class="row">
                                                 <div class="col-md-3 text-left">
                                                     @if($item['product']->image != Product::$IMAGE_DEFAULT)
-                                                        <img src="{{ asset('storage/' . $item['product']->image) }}" alt="{{ $item['product']->name }}" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                                        <img src="{{ asset('storage/' . $item['product']->image) }}" alt="{{ $item['product']->name }}" class="img-fluid d-none d-md-block rounded mb-2 shadow " onerror="this.onerror=null; this.src='{{ $item['product']->image }}';">
                                                     @else
                                                         <img src="{{ Product::$IMAGE_DEFAULT }}" alt="{{ $item['product']->name }}" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
                                                     @endif

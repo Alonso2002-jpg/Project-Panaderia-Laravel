@@ -30,9 +30,9 @@ Route::get('/', function () {
 })->name('principal');
 
 Route::group(['prefix' => 'cart'], function () {
-   Route::get('/', [CartController::class, 'showCart'])->name('cart')->middleware(['auth','admin']);
-   Route::put('/', [CartController::class, 'updateCartLine'])->name('cart.update')->middleware(['auth','admin']);
-   Route::delete('/', [CartController::class, 'destroyCartLine'])->name('cart.destroy')->middleware(['auth','admin']);
+   Route::get('/', [CartController::class, 'showCart'])->name('cart')->middleware(['auth']);
+   Route::put('/', [CartController::class, 'updateCartLine'])->name('cart.update')->middleware(['auth']);
+   Route::delete('/', [CartController::class, 'destroyCartLine'])->name('cart.destroy')->middleware(['auth']);
 });
 
 Route::group(['prefix' => 'products'], function () {

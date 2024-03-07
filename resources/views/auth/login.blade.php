@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Migas de Oro - Register')
+@section('title', 'Migas de Oro - Login')
 
 @section('content')
     <!-- Section: Design Block -->

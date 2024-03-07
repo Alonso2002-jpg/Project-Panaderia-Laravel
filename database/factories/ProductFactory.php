@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Provider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +21,8 @@ class ProductFactory extends Factory
         'price' => fake()->randomFloat(2, 1, 100),
         'stock' => fake()->numberBetween(0,100),
         'image' => 'https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg',
-        'category_id' => 1,
-        'provider_id' => 1,
+        'category_id' => Category::factory(),
+        'provider_id' => Provider::factory(),
         ];
     }
 }

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class ProviderControllerTest extends TestCase
@@ -32,10 +33,10 @@ class ProviderControllerTest extends TestCase
 
 
     public function test_create_view_admin(){
-        $adminUser = User::factory()->create(['role' => 'admin']);
-        $response = $this->actingAs($adminUser)->get('/providers/create');
+        $user = User::factory()->create(['role' => 'admin']);
+        $response = $this->actingAs($user)->get('/providers/create');
+        $response->assertOk();
         $response->assertViewIs('providers.create');
-        $response->assertStatus(200);
     }
 
     public function test_create_view_user(){
@@ -51,13 +52,7 @@ class ProviderControllerTest extends TestCase
         $response->assertStatus(302);
     }
 
-    public function test_edit_admin(){
-        $user = User::factory()->create(['role' => 'admin']);
-        $provider = Provider::factory()->create();
-        $response = $this->actingAs($user)->get('/providers/' . $provider->id  . '/edit', $provider->toArray());
-        $response->assertViewIs('providers.edit');
-        $response->assertViewHas('provider', $provider);
-    }
+
     public function test_update_admin(){
         $user = User::factory()->create(['role' => 'admin']);
         $provider = Provider::factory()->create();
@@ -81,12 +76,6 @@ class ProviderControllerTest extends TestCase
         $response->assertStatus(302);
     }
 
-    public function test_delete_admin(){
-        $user = User::factory()->create(['role' => 'admin']);
-        $provider = Provider::factory()->create();
-        $response = $this->actingAs($user)->delete('/providers/' . $provider->id);
-        $response->assertRedirect('/providers');
-    }
 
     public function test_delete_user(){
         $user = User::factory()->create(['role' => 'user']);

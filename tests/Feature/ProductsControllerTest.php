@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\ProductsController;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,6 +34,7 @@ class ProductsControllerTest extends TestCase{
         $response->assertViewHas('product', $product);
     }
 
+
     public function test_create_view_user(){
         $user = User::factory()->create(['role' => 'user']);
         $response = $this->actingAs($user)->get('/products/create');
@@ -60,6 +62,7 @@ class ProductsControllerTest extends TestCase{
         $response->assertRedirectToRoute('login');
         $response->assertStatus(302);
     }
+
 
     public function test_delete_user(){
         $user = User::factory()->create(['role' => 'user']);

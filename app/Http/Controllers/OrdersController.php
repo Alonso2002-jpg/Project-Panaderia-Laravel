@@ -48,10 +48,12 @@ class OrdersController extends Controller
         ]);
         $adress = new Address($request->all());
         $adress->country = "Spain";
+        $adress->user_id = Auth::id();
         $cart = Session::get('cart', []);
         $order = new Order();
         $order->user_id = Auth::id();
         $order->save();
+        $adress->save();
 
         foreach ($cart as $item) {
             $product = Product::find($item['product_id']);

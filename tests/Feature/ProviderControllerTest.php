@@ -67,6 +67,7 @@ class ProviderControllerTest extends TestCase
         $response->assertStatus(302);
     }
 
+
     public function test_update_view_guest(){
         $provider = Provider::first();
         $response = $this->get('/providers/1/edit', $provider->toArray());

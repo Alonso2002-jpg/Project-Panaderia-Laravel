@@ -10,10 +10,10 @@
                 <div class="col-md-6">
                     @if($product->image != Product::$IMAGE_DEFAULT)
                         <img class="card-img-top mb-5 mb-md-0" src="{{ asset('storage/' . $product->image) }}"
-                             alt="{{ $product->name }}" style="height: 400px; object-fit: cover;"/>
+                             alt="{{ $product->name }}" style="height: 400px; object-fit: cover;" onerror="this.onerror=null; this.src='{{$product->image}}'"/>
                     @else
                         <img class="card-img-top mb-5 mb-md-0" src="{{ Product::$IMAGE_DEFAULT }}"
-                             alt="{{ $product->name }}" style="height: 400px; object-fit: cover;"/>
+                             alt="{{ $product->name }}" style="height: 400px; object-fit: cover;" />
                     @endif
 
                 </div>

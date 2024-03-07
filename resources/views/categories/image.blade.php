@@ -10,11 +10,7 @@
         <h2>Edit Image Category</h2>
         <p>ID:{{$category->id}}</p>
         <p>Name:{{$category->name}}</p>
-        <p>@if($category->image != Category::$IMAGE_DEFAULT)
-                <img  src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"  style="width: 250px"/>
-            @else
-                <img  src="{{ Category::$IMAGE_DEFAULT}}" alt="{{ $category->name }}"  style="width: 250px"/>
-            @endif</p>
+        <p><img  src="{{ asset('storage/' . $category->image) }}" style="width: 300px" onerror="this.onerror=null; this.src='{{$category->image}}'"></p>
         <form action="{{ route('categories.updateImage', $category->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')

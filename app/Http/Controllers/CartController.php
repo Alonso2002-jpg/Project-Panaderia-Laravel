@@ -47,7 +47,7 @@ class CartController extends Controller
         }
         $tax = $totalPrice * 0.21;
         $total = $totalPrice + $tax;
-        return view('layout.payment')
+        return view('layouts.payment')
             ->with('totalPrice', $totalPrice)
             ->with('tax', $tax)
             ->with('total', $total);

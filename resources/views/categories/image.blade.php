@@ -10,7 +10,7 @@
         <h2>Edit Image Category</h2>
         <p>ID:{{$category->id}}</p>
         <p>Name:{{$category->name}}</p>
-        <p><img  src="{{ asset('storage/' . $category->image) }}"></p>
+        <p><img  src="{{ asset('storage/' . $category->image) }}" style="width: 300px" onerror="this.onerror=null; this.src='{{$category->image}}'"></p>
         <form action="{{ route('categories.updateImage', $category->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')

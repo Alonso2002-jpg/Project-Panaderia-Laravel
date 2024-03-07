@@ -68,7 +68,7 @@
                             </table>
                             <div class="float-right text-right">
                                 <p class="fs-5">Subtotal:</p>
-                                <p class="fs-4 text-success">€ 99.00</p>
+                                <p class="fs-4 text-success">€ {{ $totalPrice }}</p>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                             <a href="catalog.html" class="btn btn-outline-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
                         </div>
                         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-                            <a href="catalog.html" style="color: #cca000;">
+                            <a href="{{ route('products.index') }}" style="color: #cca000;">
                                 <i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a>
                         </div>
                     </div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignUuid('product_id')->references('id')->on('products');
             $table->integer('stock');
             $table->decimal('unitPrice', 10, 2);
-            $table->decimal('totalPrice', 10,2);
+            $table->decimal('linePrice', 10,2);
             $table->timestamps();
         });
     }

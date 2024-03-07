@@ -5,12 +5,7 @@
 @section('title', 'Miga de Oro - Providers')
 
 @section('content')
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Know about our Providers!</div>
-            <div class="masthead-heading text-uppercase">Yum Yummy Hello!</div>
-        </div>
-    </header>
+    @include('normalhead')
     <div class="container">
         <h2>Edit Provider</h2>
         <form action="{{ route('providers.update', $provider->id) }}" method="POST">

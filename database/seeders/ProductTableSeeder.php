@@ -23,7 +23,7 @@ class ProductTableSeeder extends Seeder
                     'name' => 'Milk Bread',
                     'description' => 'Soft and fluffy bread enriched with milk, creating a tender crumb and a slightly sweet flavor.',
                     'price' => 2.5,
-                    'stock' => 100,
+                    'stock' => 5,
                     'category_id' =>  4,
                     'provider_id' => 3
                 ],

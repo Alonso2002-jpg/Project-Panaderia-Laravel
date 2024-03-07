@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
 
@@ -22,9 +23,19 @@ class CartController extends Controller
     public function showCart()
     {
         $cart = Session::get('cart', []);
-        return view('cart')->with('cart', $cart);
-    }
+        $cartItems = [];
+        $totalPrice = 0;
+        foreach ($cart as $item) {
+            $product = $this->getProduct($item['product_id']);
+            $totalPrice += $product->price * $item['stock'];
+            $cartItems[] = [
+                'product' => $product,
+                'quantity' => $item['stock'],
+            ];
+        }
 
+        return view('cart.cart')->with('cartItems', $cartItems)->with('totalPrice', $totalPrice);
+    }
     /**
      * Updates the quantity of a specific product in the shopping cart.
      *
@@ -91,6 +102,7 @@ class CartController extends Controller
                     break;
                 }
             }
+            $cart = array_values($cart);
             Session::put('cart', $cart);
             Session::put('totalItems', $totalItems);
             return redirect()->back();
@@ -98,5 +110,9 @@ class CartController extends Controller
             flash('Error updating cart line .' . $request->key)->error()->important();
             return redirect()->back();
         }
+    }
+
+    private function getProduct($id){
+        return Cache::has($id) ?  Cache::get($id) : Product::find($id);
     }
 }

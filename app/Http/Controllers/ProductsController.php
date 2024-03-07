@@ -40,6 +40,12 @@ class ProductsController extends Controller
             ->with('providers', $providers);
     }
 
+    public function products()
+    {
+        $products = Product::orderBy('id', 'asc')->paginate(5);
+        return view('products.gestion')->with('products', $products);
+    }
+
     /**
      * Adds a specified quantity of a product to the shopping cart.
      *
@@ -78,7 +84,7 @@ class ProductsController extends Controller
             flash($request->stock . ' ' . $product->name . ' added to cart.')->success()->important();
             return redirect()->back();
         } catch (Exception $e) {
-            flash('Error adding ' . $product->name . ' to cart.')->error()->important();
+            flash('Error adding ' . $product->name . ' to cart.' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }

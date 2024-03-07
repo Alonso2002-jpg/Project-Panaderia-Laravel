@@ -5,15 +5,10 @@
 @section('title', 'Miga de Oro - Gestion de Productos')
 
 @section('content')
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Know about our Products!</div>
-            <div class="masthead-heading text-uppercase">Yum Yum Hello!</div>
-        </div>
-    </header>
+    @include('normalhead')
 
     <div class="container">
-        <h2>Create a Provider</h2>
+        <h2>Create a Product</h2>
         <form action="{{ route('products.store') }}" method="POST">
             @csrf
             <div class="form-group">

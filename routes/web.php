@@ -10,6 +10,8 @@ use App\Mail\MailableController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\GeneradorController;
+use \App\Http\Controllers\OrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,9 +88,10 @@ Route::group(['prefix' => 'gestion'], function () {
 
 });
 
-Route::post('/sendResetEmail', [UsersController::class, 'passwordForgotten'])->name('password.forgotten');
 
+Route::name('print')->get('/imprimir', [OrdersController::class, 'generateInvoice']);
 Route::get('/about', function () { return view('about'); })->name('about');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

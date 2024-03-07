@@ -17,21 +17,22 @@
                                 Data Management
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="#">Categories</a></li>
-                                <li><a class="dropdown-item" href="#">Providers</a></li>
-                                <li><a class="dropdown-item" href="#">Staff</a></li>
+                                <li><a class="dropdown-item" href="{{route('gestion.products')}}">Products</a></li>
+                                <li><a class="dropdown-item" href="{{route('categories.index')}}">Categories</a></li>
+                                <li><a class="dropdown-item" href="{{route('providers.index')}}">Providers</a></li>
+                                <li><a class="dropdown-item" href="{{route('staff.index')}}">Staff</a></li>
                             </ul>
                         </li>
 
                     @endif
                     <li class="nav-item">
-                        <form class="d-flex cart">
-                            <button class="btn btn-outline-light" type="submit">
+                        <div class="d-flex cart">
+                            <a class="btn btn-outline-light" type="submit" href="{{ route('cart') }}">
                                 <i class="fas fa-cart-shopping mx-1"></i>
                                 Cart
-                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                            </button>
-                        </form>
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">@if(session()->has('totalItems')) {{ session()->get('totalItems') }} @else 0 @endif</span>
+                            </a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <form method="post" action="{{ route('logout') }}">

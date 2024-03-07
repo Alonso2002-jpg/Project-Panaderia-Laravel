@@ -3,9 +3,8 @@
 @section('title', 'Miga de Oro -Gestion Products')
 
 @section('content')
+    @include('normalhead')
     <section>
-@auth
-    @if(auth()->user()->role == 'admin')
         <div class="container">
             <h2>Our Products</h2>
             <div class="row">
@@ -39,9 +38,7 @@
                                     </form>
                                     @endif
                                 </td>
-
                         </tr>
-
                     @endforeach
                     </tbody>
                 </table>
@@ -50,6 +47,4 @@
                 </div>
             </div>
         </div>
-    @endif
     </section>
-@endauth

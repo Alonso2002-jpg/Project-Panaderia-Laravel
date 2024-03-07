@@ -26,7 +26,7 @@
                                     <div class="d-flex align-items-center justify-content-between">
 
                                         <span>Shipping Information</span>
-                                        <img src="{{asset('images/general/paypal.png')}}" width="30" alt="">
+                                        <i class="fas fa-person"></i>
 
                                     </div>
                                 </button>
@@ -177,11 +177,11 @@
                 <div class="d-flex justify-content-between p-3">
 
                     <div class="d-flex flex-column">
-                        <span>Total To Pay (EUR) <i class="fa fa-caret-down"></i></span>
+                        <span>Total Cart<i class="fa fa-caret-down"></i></span>
                     </div>
 
                     <div class="mt-1">
-                        <span class="super-month">$9.99</span>
+                        <span class="super-month">€ {{ $totalPrice }}</span>
                     </div>
 
                 </div>
@@ -193,16 +193,26 @@
 
                     <div class="d-flex flex-column">
 
-                        <span>Today you pay(US Dollars)</span>
-                        <small>After 30 days $9.59</small>
+                        <span>Aditional Tax (21%)</span>
 
                     </div>
-                    <span>$0</span>
-
-
+                    <span>+ € {{ $tax }}</span>
 
                 </div>
 
+                <hr class="mt-0 line">
+
+
+                <div class="p-3 d-flex justify-content-between">
+
+                    <div class="d-flex flex-column">
+
+                        <span>Total To Pay (EUR)</span>
+
+                    </div>
+                    <span class="text-success">€ {{ $total }}</span>
+
+                </div>
 
                 <div class="p-3">
 

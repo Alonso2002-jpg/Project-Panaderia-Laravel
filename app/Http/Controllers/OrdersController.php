@@ -77,6 +77,15 @@ class OrdersController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param $order
+     * @param $orderLines
+     * @param $address
+     * @return mixed
+     *
+     * Este metodo genera el pdf de la orden, recibe la order, las lineas de pedidos y la direccion, busca al usuario autenticado
+     * y con esos datos genera la factura completa que se descargara para el usuario.
+     */
     public function generateInvoice($order, $orderLines, $address)
     {
         $user = User::find(Auth::id());

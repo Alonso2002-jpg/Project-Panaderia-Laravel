@@ -5,12 +5,7 @@
 @section('title', 'Miga de Oro - Staff')
 
 @section('content')
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Know about our Staff!</div>
-            <div class="masthead-heading text-uppercase">Hello People!</div>
-        </div>
-    </header>
+    @include('normalhead')
     <div class="container">
         <h2>Edit the Staff</h2>
         <form action="{{ route('staff.update', $staff->id) }}" method="POST">

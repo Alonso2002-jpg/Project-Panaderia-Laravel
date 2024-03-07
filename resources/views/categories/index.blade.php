@@ -24,7 +24,11 @@
                         @foreach($categories as $category)
                             <tr>
                                 @if($category->id!=1)
-                                <td><img src="{{ asset('storage/' . $category->image) }}" style="width: 45px"></td>
+                                <td>@if($category->image != Category::$IMAGE_DEFAULT)
+                                        <img  src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"  style="width: 90px"/>
+                                    @else
+                                        <img  src="{{ Category::$IMAGE_DEFAULT}}" alt="{{ $category->name }}"  style="width: 90px"/>
+                                    @endif</td>
                                     <td>{{ $category->name }}</td>
                                 <td><button><a class="btn btn-primary" href="{{ route('categories.edit', $category->id) }}">Edit</a></button>
                                     <button><a class="btn btn-secondary" href="{{ route('categories.editImage', $category->id) }}">EditImage</a></button>

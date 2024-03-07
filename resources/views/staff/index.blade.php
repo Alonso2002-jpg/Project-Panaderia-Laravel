@@ -5,12 +5,7 @@
 @section('title', 'Miga de Oro - Staff')
 
 @section('content')
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Know about our Staff!</div>
-            <div class="masthead-heading text-uppercase">Hello people!</div>
-        </div>
-    </header>
+    @include('normalhead')
     <div class="container">
         <h2>Our Staff</h2>
         <div class="row">
@@ -34,7 +29,11 @@
                 @foreach($personal as $staff)
                     <tr>
                         @if($staff->id!=1)
-                            <td><img src="{{ asset('storage/' . $staff->image) }}" style="width: 45px"></td>
+                            <td> @if($staff->image != staff::$IMAGE_DEFAULT)
+                                    <img  src="{{ asset('storage/' . $staff->image) }}" alt="{{ $staff->name }}"  style="width: 90px"/>
+                                @else
+                                    <img  src="{{ staff::$IMAGE_DEFAULT}}" alt="{{ $staff->name }}"  style="width: 90px"/>
+                                @endif</td>
                             <td>{{ $staff->name }}</td>
                             <td>{{ $staff->lastname }}</td>
                             <td>{{ $staff->dni }}</td>

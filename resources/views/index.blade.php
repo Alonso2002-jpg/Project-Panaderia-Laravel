@@ -45,7 +45,7 @@
     <div class="card mb-1 m-4">
         <div class="row col-lg-12">
             <div class="col-md-3">
-                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px">
+                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px" onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px">
+                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
             </div>
         </div>
     </div>
@@ -78,7 +78,7 @@
     <div class="card mb-1 m-4">
         <div class="row col-lg-12">
             <div class="col-md-3">
-                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px">
+                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px">
+                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
             </div>
         </div>
     </div>

@@ -14,7 +14,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             @if($product->image != Product::$IMAGE_DEFAULT)
-                                <img class="card-img-top" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;"/>
+                                <img class="card-img-top" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;"  onerror="this.onerror=null; this.src='{{$product->image}}'"/>
                             @else
                                 <img class="card-img-top" src="{{ Product::$IMAGE_DEFAULT }}" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;"/>
                             @endif

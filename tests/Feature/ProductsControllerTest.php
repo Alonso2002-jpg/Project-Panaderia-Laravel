@@ -2,11 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\ProductsController;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProductsControllerTest extends TestCase{
@@ -18,7 +16,7 @@ class ProductsControllerTest extends TestCase{
     $this->artisan('db:seed');
     }
 
-    public function text_index() {
+    public function test_index() {
         $response = $this->get('/products');
         $response->assertViewIs('products.index');
         $response->assertViewHas('products');
@@ -31,6 +29,13 @@ class ProductsControllerTest extends TestCase{
         $response->assertStatus(200);
         $response->assertViewIs('products.show');
         $response->assertViewHas('product', $product);
+    }
+
+    public function test_create_view_admin(){
+        $user = User::factory()->create(['role' => 'admin']);
+        $response = $this->actingAs($user)->get('/products/create');
+        $response->assertViewIs('products.create');
+        $response->assertStatus(200);
     }
 
     public function test_create_view_user(){
@@ -60,6 +65,7 @@ class ProductsControllerTest extends TestCase{
         $response->assertRedirectToRoute('login');
         $response->assertStatus(302);
     }
+
 
     public function test_delete_user(){
         $user = User::factory()->create(['role' => 'user']);

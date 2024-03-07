@@ -275,6 +275,6 @@ class ProvidersController extends Controller
     }
 
     private function getProvider($id){
-        return Cache::has('provider' . $id) ? Cache::get('provider' . $id) : Category::find($id);
+        return Cache::has('provider' . $id) ? Cache::get('provider' . $id) : Provider::find($id);
     }
 }

@@ -34,7 +34,7 @@ class CartController extends Controller
             ];
         }
 
-        return view('cart')->with('cartItems', $cartItems)->with('totalPrice', $totalPrice);
+        return view('cart.cart')->with('cartItems', $cartItems)->with('totalPrice', $totalPrice);
     }
     /**
      * Updates the quantity of a specific product in the shopping cart.

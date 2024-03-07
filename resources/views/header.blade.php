@@ -26,13 +26,13 @@
 
                     @endif
                     <li class="nav-item">
-                        <form class="d-flex cart">
-                            <button class="btn btn-outline-light" type="submit">
+                        <div class="d-flex cart">
+                            <a class="btn btn-outline-light" type="submit" href="{{ route('cart') }}">
                                 <i class="fas fa-cart-shopping mx-1"></i>
                                 Cart
-                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                            </button>
-                        </form>
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">@if(session()->has('totalItems')) {{ session()->get('totalItems') }} @else 0 @endif</span>
+                            </a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <form method="post" action="{{ route('logout') }}">

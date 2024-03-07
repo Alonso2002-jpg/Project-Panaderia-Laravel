@@ -91,6 +91,7 @@ Route::group(['prefix' => 'gestion'], function () {
 Route::get('/payment', [CartController::class, 'payment'])->name('payment');
 Route::name('print')->get('/imprimir', [OrdersController::class, 'generateInvoice']);
 Route::get('/about', function () { return view('about'); })->name('about');
+Route::post('/payment', [CartController::class, 'processPayment'])->name('');
 
 Auth::routes();
 

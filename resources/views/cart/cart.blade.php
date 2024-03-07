@@ -47,9 +47,24 @@
                                             </div>
                                         </td>
                                         <td data-th="Price">€ {{ $item['product']->price }}</td>
-                                        <td data-th="Quantity">
-                                            <input type="number" class="form-control form-control-lg text-center" value="{{ $item['quantity'] }}">
+                                        <form method="post" action="{{ route('cart.update', $item['product']->id) }}">
+                                            @csrf
+                                            @method('PUT')
+                                            <td data-th="Quantity">
+                                                <input type="number" class="form-control form-control-lg text-center" name="stock" value="{{ $item['quantity'] }}">
+                                            </td>
+                                            <td data-th="id">
+                                                <input hidden="" class="form-control form-control-lg text-center" name="id" value="{{ $item['product']->id }}">
+                                            </td>
+                                        <td class="actions" data-th="">
+                                                <input type="hidden" name="key" value="{{ $key }}">
+                                                <div class="input-group">
+                                                    <button type="submit" class="btn btn-outline-primary btn-md ml-2">
+                                                        <i class="fas fa-sync-alt"></i> Update
+                                                    </button>
+                                                </div>
                                         </td>
+                                        </form>
                                         <td class="actions" data-th="">
                                             <form method="post" action="{{ route('cart.destroy', $item['product']->id) }}">
                                                 @csrf
@@ -74,7 +89,7 @@
                     </div>
                     <div class="row mt-4 d-flex align-items-center">
                         <div class="col-sm-6 order-md-2 text-right">
-                            <a href="catalog.html" class="btn btn-outline-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
+                            <a href="{{ route('payment') }}" class="btn btn-outline-warning mb-4 btn-lg pl-5 pr-5">Checkout</a>
                         </div>
                         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
                             <a href="{{ route('products.index') }}" style="color: #cca000;">

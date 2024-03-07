@@ -5,23 +5,22 @@
 @section('title', 'Miga de Oro - Staff')
 
 @section('content')
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Know about our Staff!</div>
-            <div class="masthead-heading text-uppercase">Hello people!</div>
-        </div>
-    </header>
+    @include('normalhead')
     <div class="container">
         <h2>Edit Image of Staff</h2>
         <p>ID:{{$staff->id}}</p>
         <p>Name:{{$staff->name}}</p>
 
-        <p><img src="{{ asset('storage/' . $staff->image) }}"></p>
+        <p>@if($staff->image != staff::$IMAGE_DEFAULT)
+                <img  src="{{ asset('storage/' . $staff->image) }}" alt="{{ $staff->name }}"  style="width: 250px"/>
+            @else
+                <img  src="{{ staff::$IMAGE_DEFAULT}}" alt="{{ $staff->name }}"  style="width: 250px"/>
+            @endif</p>
         <form action="{{ route('staff.updateImage', $staff->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="m-md-3">
-                <label for="image">Select an Image for the Staff guy/gal</label>
+                <label for="image">Select an Image for the Staff</label>
                 <input type="file" name="image" required class="form-control">
                 <div class="invalid-feedback"> Please select an Image valid</div>
             </div>

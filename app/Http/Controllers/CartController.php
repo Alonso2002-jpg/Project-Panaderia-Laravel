@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -36,6 +37,33 @@ class CartController extends Controller
 
         return view('cart.cart')->with('cartItems', $cartItems)->with('totalPrice', $totalPrice);
     }
+
+    public function payment(){
+        $cart = Session::get('cart', []);
+        $totalPrice = 0;
+        foreach ($cart as $item) {
+            $product = $this->getProduct($item['product_id']);
+            $totalPrice += $product->price * $item['stock'];
+        }
+        $tax = $totalPrice * 0.21;
+        $total = $totalPrice + $tax;
+        return view('layouts.payment')
+            ->with('totalPrice', $totalPrice)
+            ->with('tax', $tax)
+            ->with('total', $total);
+    }
+
+    public function processPayment(Request $request){
+        $request->validate([
+           'card_number' => 'required|credit_card',
+            'expiration_date' => 'required|regex:/^\d{2}\/\d{2}$/',
+            'cvv' => 'required|digits:3'
+        ]);
+
+
+
+    }
+
     /**
      * Updates the quantity of a specific product in the shopping cart.
      *
@@ -51,7 +79,7 @@ class CartController extends Controller
     public function updateCartLine(Request $request)
     {
         try {
-            $product = Product::find($request->id);
+            $product = $this->getProduct($request->id);
 
             $request->validate([
                 'stock' => 'required|gt:0|lte:' . $product->stock,
@@ -72,7 +100,7 @@ class CartController extends Controller
             Session::put('totalItems', $totalItems);
             return redirect()->back();
         } catch (Exception $e) {
-            flash('Error updating cart line .' . $request->key)->error()->important();
+            flash('Error updating cart line '. $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }
@@ -107,7 +135,7 @@ class CartController extends Controller
             Session::put('totalItems', $totalItems);
             return redirect()->back();
         } catch (Exception $e) {
-            flash('Error updating cart line .' . $request->key)->error()->important();
+            flash('Error updating cart line ' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }

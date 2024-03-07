@@ -9,25 +9,21 @@
     <div class="container d-flex justify-content-center mt-5 mb-5">
 
 
-
     <div class="row g-3">
 
         <div class="col-md-6">
-
+            <form action="{{ route('order_process') }}" method="POST">
+                @csrf
             <span>Payment Method</span>
             <div class="card">
-
                 <div class="accordion" id="accordionExample">
-
                     <div class="card">
                         <div class="card-header p-0" id="headingTwo">
                             <h2 class="mb-0">
                                 <button class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     <div class="d-flex align-items-center justify-content-between">
-
                                         <span>Shipping Information</span>
                                         <i class="fas fa-person"></i>
-
                                     </div>
                                 </button>
                             </h2>
@@ -37,21 +33,21 @@
                                <div class="card-body col-6">
                                    <span class="font-weight-normal card-text">Name</span>
                                    <div class="input">
-                                       <input type="text" class="form-control" placeholder="John Doe">
+                                       <input type="text" name="name" required class="form-control" placeholder="John Doe" value="{{$address->name ?? "" }}">
 
                                    </div>
                                </div>
                                <div class="card-body col-6">
                                    <span class="font-weight-normal card-text">Last Name</span>
                                    <div class="input">
-                                       <input type="text" class="form-control" placeholder="Doe Doe">
+                                       <input type="text" name="lastName" required class="form-control" placeholder="Doe Doe" value="{{$address->lastName ?? "" }}">
 
                                    </div>
                                </div>
                                <div class="card-body col-6">
                                    <span class="font-weight-normal card-text">DNI/NIE</span>
                                    <div class="input">
-                                       <input type="text" class="form-control" placeholder="Y1234567W">
+                                       <input type="text" class="form-control" required name="dni" placeholder="Y1234567W" value="{{$address->dni ?? "" }}">
 
                                    </div>
                                </div>
@@ -59,39 +55,39 @@
                                <div class="card-body col-6">
                                    <span class="font-weight-normal card-text">Street</span>
                                    <div class="input">
-                                       <input type="text" class="form-control">
+                                       <input type="text" class="form-control" required name="street" value="{{$address->street ?? "" }}">
 
                                    </div>
                                </div>
                                <div class="card-body col-3">
                                    <span class="font-weight-normal card-text">Number</span>
                                    <div class="input">
-                                       <input type="text" class="form-control">
+                                       <input type="text" class="form-control" name="number" value="{{$address->number ?? "" }}">
                                    </div>
                                </div>
                                <div class="card-body col-3">
                                    <span class="font-weight-normal card-text">City</span>
                                    <div class="input">
-                                       <input type="text" class="form-control" >
+                                       <input type="text" class="form-control" required name="city" value="{{$address->city ?? "" }}" >
                                    </div>
                                </div>
                                <div class="card-body col-4">
                                    <span class="font-weight-normal card-text">Province</span>
                                    <div class="input">
-                                       <input type="text" class="form-control">
+                                       <input type="text" class="form-control" required name="province" value="{{$address->province ?? "" }}">
                                    </div>
                                </div>
                                <div class="col-4"></div>
                                <div class="card-body col-4">
                                    <span class="font-weight-normal card-text">Postal Code</span>
                                    <div class="input">
-                                       <input type="text" class="form-control" >
+                                       <input type="text" class="form-control" required name="postCode" value="{{$address->postCode ?? "" }}">
                                    </div>
                                </div>
                                <div class="card-body col-6">
                                    <span class="font-weight-normal card-text">Aditional Information</span>
                                    <div class="input">
-                                       <input type="text" class="form-control">
+                                       <input type="text" class="form-control" name="additionalInfo" value="{{$address->additionalInfo ?? "" }}">
                                    </div>
                                </div>
                            </div>
@@ -123,7 +119,7 @@
                                 <div class="input">
 
                                     <i class="fa fa-credit-card"></i>
-                                    <input type="text" class="form-control" placeholder="0000 0000 0000 0000">
+                                    <input type="text" class="form-control" name="card" required placeholder="0000 0000 0000 0000">
 
                                 </div>
 
@@ -135,7 +131,7 @@
                                         <div class="input">
 
                                             <i class="fa fa-calendar"></i>
-                                            <input type="text" class="form-control" placeholder="MM/YY">
+                                            <input type="text" required name="expiry" class="form-control" placeholder="MM/YY">
 
                                         </div>
 
@@ -148,7 +144,7 @@
                                         <div class="input">
 
                                             <i class="fa fa-lock"></i>
-                                            <input type="text" class="form-control" placeholder="000">
+                                            <input type="text" required name="cvv" class="form-control" placeholder="000">
 
                                         </div>
 
@@ -224,12 +220,21 @@
 
 
             </div>
+            </form>
         </div>
-
     </div>
-
-
 </div>
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        <br/>
+    @endif
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 @endsection

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
@@ -38,7 +40,10 @@ class CartController extends Controller
         return view('cart.cart')->with('cartItems', $cartItems)->with('totalPrice', $totalPrice);
     }
 
-    public function payment(){
+    public function payment()
+    {
+        $user = User::find(Auth::id());
+        $address = $user->addresses()->orderBy('id', 'desc')->first();
         $cart = Session::get('cart', []);
         $totalPrice = 0;
         foreach ($cart as $item) {
@@ -50,18 +55,8 @@ class CartController extends Controller
         return view('layouts.payment')
             ->with('totalPrice', $totalPrice)
             ->with('tax', $tax)
-            ->with('total', $total);
-    }
-
-    public function processPayment(Request $request){
-        $request->validate([
-           'card_number' => 'required|credit_card',
-            'expiration_date' => 'required|regex:/^\d{2}\/\d{2}$/',
-            'cvv' => 'required|digits:3'
-        ]);
-
-
-
+            ->with('total', $total)
+            ->with('address', $address);
     }
 
     /**
@@ -100,7 +95,7 @@ class CartController extends Controller
             Session::put('totalItems', $totalItems);
             return redirect()->back();
         } catch (Exception $e) {
-            flash('Error updating cart line '. $e->getMessage())->error()->important();
+            flash('Error updating cart line ' . $e->getMessage())->error()->important();
             return redirect()->back();
         }
     }
@@ -140,7 +135,8 @@ class CartController extends Controller
         }
     }
 
-    private function getProduct($id){
-        return Cache::has($id) ?  Cache::get($id) : Product::find($id);
+    private function getProduct($id)
+    {
+        return Cache::has($id) ? Cache::get($id) : Product::find($id);
     }
 }

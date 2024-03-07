@@ -60,7 +60,7 @@
                                                 <input type="hidden" name="key" value="{{ $key }}">
                                                 <div class="input-group">
                                                     <button type="submit" class="btn btn-outline-primary btn-md ml-2">
-                                                        <i class="fas fa-sync-alt"></i> Update
+                                                        <i class="fas fa-sync-alt"></i>
                                                     </button>
                                                 </div>
                                         </td>

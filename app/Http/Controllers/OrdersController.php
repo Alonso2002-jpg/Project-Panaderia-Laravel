@@ -35,18 +35,20 @@ class OrdersController extends Controller
         $request->validate([
             'name' => 'min:3|max:50|required',
             'lastName' => 'min:3|max:75|required',
-            'dni' => 'regex:/^\d{8}[a-zA-a]$/|required',
+            'dni' => 'regex:/^\d{8}[a-zA-Z]$/|required',
             'street' => 'min:5|max:100|required',
             'number' => 'sometimes|min:1|max:7',
             'city' => 'min:3|max:50|required',
             'province' => 'min:3|max:70|required',
-            'country' => 'min:3|max:70|required',
             'postCode' => 'regex:/^\d{5}$/|required',
-            'additionalInfo' => 'sometimes|max:150'
+            'additionalInfo' => 'sometimes|max:150',
+            'card' => 'required|regex:/^\d{16}$/',
+            'expiry' => 'required|regex:/^[0-9]{2}\/[0-9]{2}$/',
+            'cvv' => 'required|regex:/^\d{3}$/'
         ]);
-        $orderLines = [];
         $adress = new Address($request->all());
-        $cart = Session::get('cart');
+        $adress->country = "Spain";
+        $cart = Session::get('cart', []);
         $order = new Order();
         $order->user_id = Auth::id();
         $order->save();
@@ -71,10 +73,9 @@ class OrdersController extends Controller
         Session::forget('cart');
         Session::forget('totalItems');
         Session::put('totalItems', 0);
-        // AQUI FALTA CREAR LA FACTURA
 
-        flash('Product successfully added to the cart.')->success()->important();
-        return redirect()->back();
+        flash('Order successfully made.')->success()->important();
+        return $this->generateInvoice($order, $order->orderLines, $adress);
     }
 
     /**

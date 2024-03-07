@@ -23,7 +23,7 @@
                                                 <div class="portfolio-hover-content"><i class="fas fa-bread-slice fa-3x"></i></div>
                                             </div>
                                             @if($category->image != Category::$IMAGE_DEFAULT)
-                                                <img class="img-fluid" src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" style="height: 200px; object-fit: cover;"/>
+                                                <img class="img-fluid" src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" style="height: 200px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ $category->image }}';"/>
                                             @else
                                                 <img class="img-fluid" src="{{ Category::$IMAGE_DEFAULT }}" alt="{{ $category->name }}" />
                                             @endif
@@ -45,7 +45,7 @@
     <div class="card mb-1 m-4">
         <div class="row col-lg-12">
             <div class="col-md-3">
-                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px" onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
+                <img src="https://scientificallysweet.com/wp-content/uploads/2020/04/IMG_4556-feature.jpg" class="img-fluid rounded-start" style="height: 200px; width: 300px" onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
+                <img src="https://www.iheartnaptime.net/wp-content/uploads/2022/10/chocolate-cupcakes-from-scratch.jpg" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
             </div>
         </div>
     </div>
@@ -78,7 +78,7 @@
     <div class="card mb-1 m-4">
         <div class="row col-lg-12">
             <div class="col-md-3">
-                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
+                <img src="https://prd-webrepository.firabarcelona.com/wp-content/uploads/2019/04/05132158/doce-envases-espanoles-entran-en-la-elite-del-packaging-mundial.jpg" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <img src="{{ asset('storage/' . $categories[0]->image) }}" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
+                <img src="https://i2.wp.com/recetasecuatorianas.com/wp-content/uploads/2018/05/Receta-del-pan-de-leche.jpg?fit=900%2C600" class="img-fluid rounded-start" style="height: 200px; width: 300px"  onerror="this.onerror=null; this.src='{{ Category::$IMAGE_DEFAULT }}';">
             </div>
         </div>
     </div>

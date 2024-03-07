@@ -54,7 +54,7 @@
                         <div class="card">
                             @if($relatedProduct->image != Product::$IMAGE_DEFAULT)
                                 <img class="card-img-top" src="{{ asset('storage/' . $relatedProduct->image) }}"
-                                     alt="{{ $product->name }}" style="height: 250px; object-fit: cover;"/>
+                                     alt="{{ $product->name }}" style="height: 250px; object-fit: cover;"  onerror="this.onerror=null; this.src='{{ $relatedProduct->image }}';"/>
                             @else
                                 <img class="card-img-top" src="{{ Product::$IMAGE_DEFAULT }}"
                                      alt="{{ $relatedProduct->name }}" style="height: 250px; object-fit: cover;"/>

@@ -15,10 +15,11 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <th>Image</th>
                     <th>Name</th>
                     <th>NIF</th>
                     <th>Telephone</th>
-                    <th>Image</th>
+
                 </tr>
                 </thead>
 
@@ -26,10 +27,14 @@
                 @foreach($providers as $provider)
                     <tr>
                         @if($provider->id!=1)
+                            <td>@if($provider->image != Provider::$IMAGE_DEFAULT)
+                                    <img  src="{{ asset('storage/' . $provider->image) }}" alt="{{ $provider->name }}"  style="width: 90px"/>
+                                @else
+                                    <img  src="{{ Provider::$IMAGE_DEFAULT}}" alt="{{ $provider->name }}"  style="width: 90px"/>
+                                @endif</td>
                             <td>{{ $provider->name }}</td>
                             <td>{{ $provider->nif }}</td>
                             <td>{{$provider->telephone}}</td>
-                            <td><img width="100px" src="{{ $provider->image }}"></td>
                             <td>
                                 <button><a class="btn btn-primary" href="{{ route('providers.edit', $provider->id) }}">Edit</a>
                                 </button>

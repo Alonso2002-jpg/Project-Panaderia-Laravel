@@ -36,6 +36,22 @@ class CartController extends Controller
 
         return view('cart.cart')->with('cartItems', $cartItems)->with('totalPrice', $totalPrice);
     }
+
+    public function payment(){
+        $cart = Session::get('cart', []);
+        $totalPrice = 0;
+        foreach ($cart as $item) {
+            $product = $this->getProduct($item['product_id']);
+            $totalPrice += $product->price * $item['stock'];
+        }
+        $tax = $totalPrice * 0.21;
+        $total = $totalPrice + $tax;
+        return view('layout.payment')
+            ->with('totalPrice', $totalPrice)
+            ->with('tax', $tax)
+            ->with('total', $total);
+    }
+
     /**
      * Updates the quantity of a specific product in the shopping cart.
      *

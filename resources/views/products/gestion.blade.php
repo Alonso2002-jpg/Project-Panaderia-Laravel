@@ -1,10 +1,10 @@
+@php use App\Models\Product; @endphp
 @extends('main')
 
 @section('title', 'Miga de Oro -Gestion Products')
 
 @section('content')
     @include('normalhead')
-    <section>
         <div class="container">
             <h2>Our Products</h2>
             <div class="row">
@@ -24,8 +24,13 @@
                     <tbody>
                     @foreach($products as $product)
                         <tr>
-                            @if($product->id!=1)
-                                <td><img src="{{ asset('storage/' . $product->image) }}" style="width: 45px"></td>
+                                <td>
+                                    @if($product->image != Product::$IMAGE_DEFAULT)
+                                        <img  src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"  style="width: 90px"/>
+                                    @else
+                                        <img  src="{{ Product::$IMAGE_DEFAULT}}" alt="{{ $product->name }}"  style="width: 90px"/>
+                                    @endif
+                                </td>
                                 <td>{{ $product->name }}</td>
                                 <td>${{ $product->price }}</td>
                                 <td>{{ $product->stock }}</td>
@@ -36,7 +41,6 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                     </form>
-                                    @endif
                                 </td>
                         </tr>
                     @endforeach
@@ -47,4 +51,4 @@
                 </div>
             </div>
         </div>
-    </section>
+@endsection

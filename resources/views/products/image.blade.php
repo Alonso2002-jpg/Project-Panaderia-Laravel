@@ -1,4 +1,4 @@
-@php use App\Models\Category; @endphp
+@php use App\Models\Product; @endphp
 
 @extends('main')
 
@@ -10,7 +10,11 @@
         <h2>Edit Image of the Product</h2>
         <p>ID:{{$product->id}}</p>
         <p>Name:{{$product->name}}</p>
-        <p><img  src="{{ asset('storage/' . $product->image) }}"></p>
+        <p>  @if($product->image != Product::$IMAGE_DEFAULT)
+                <img  src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"  style="width: 250px"/>
+            @else
+                <img  src="{{ Product::$IMAGE_DEFAULT}}" alt="{{ $product->name }}"  style="width: 250px"/>
+            @endif</p>
         <form action="{{ route('products.updateImage', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')

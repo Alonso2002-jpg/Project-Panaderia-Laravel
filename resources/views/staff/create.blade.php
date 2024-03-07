@@ -6,12 +6,7 @@
 
 @section('content')
 
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Know about our Staff!</div>
-            <div class="masthead-heading text-uppercase">Hello People!</div>
-        </div>
-    </header>
+    @include('normalhead')
 
     <div class="container">
         <h2>Create Staff</h2>
